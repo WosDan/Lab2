@@ -10,8 +10,8 @@ class MenuFrame extends Frame{
   public void display(){
     if(game == 1) {image(sprites[0], x, y, fWidth, fHeight);}
     if(game == 2) {image(sprites[1], x, y, fWidth, fHeight);}
-    if(game == 3) {image(sprites[0], x, y, fWidth, fHeight);}
-    if(game == 4) {image(sprites[0], x, y, fWidth, fHeight);}
+    if(game == 3) {image(sprites[2], x, y, fWidth, fHeight);}
+    if(game == 4) {image(sprites[3], x, y, fWidth, fHeight);}
     noFill();
   }
   

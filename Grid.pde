@@ -8,6 +8,7 @@ class Grid{
   private float y;
   private float gap;
   private PImage sprites[];
+  protected PImage spritesHover[];
   private Frame[][] frames;
   
   Grid(int rows, int columns, float x, float y, float size, PImage[] sprites){
@@ -40,6 +41,26 @@ class Grid{
       for(int j = 0; j < columns; j++){
         frames[i][j] = new MenuFrame(x + j*fWidth + j*gap, y + i*fHeight + i*gap, fWidth, fHeight, j+i+1, sprites);
       }
+    }
+  }
+  
+  Grid(int rows, int columns, float x, float y, float fWidth, float fHeight, PImage[] sprites, float gap, PImage[] spritesHover){
+    this.rows = rows;
+    this.columns = columns;
+    this.frames = new Frame[rows][columns];
+    this.x = x;
+    this.y = y;
+    this.fWidth = fWidth;
+    this.fHeight = fHeight;
+    this.sprites = sprites;
+    this.gap = gap;
+    this.spritesHover = spritesHover;
+    int ct = 0;
+    for(int i = 0; i < rows; i++){
+      for(int j = 0; j < columns; j++){
+        frames[i][j] = new FrameG2(x + j*fWidth + j*gap, y + i*fHeight + i*gap, fWidth, fHeight, ct+1, sprites, spritesHover);
+        ct++;
+    }
     }
   }
   
