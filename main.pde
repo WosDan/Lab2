@@ -11,9 +11,11 @@ Time time;
 int screen;
 int xSize;
 int ySize;
+int now;
 
 PImage stIcons[] = new PImage[6];
 PImage Icons2[] = new PImage[7];
+PImage FondoM;
 
 void settings(){
   //size(1024, 576);
@@ -24,6 +26,7 @@ void settings(){
 }
 
 void setup() {
+  FondoM = loadImage("./src/img/fondo_principal.png");
   stIcons[0] = loadImage("./src/img/lock.png");
   stIcons[1] = loadImage("./src/img/cuadrito_feliz_boton.png");
   stIcons[2] = stIcons[0];
@@ -33,7 +36,7 @@ void setup() {
   Icons2[2] = loadImage("./src/img/cuadrito_enojado.png");
   screen = stScreen;
   //screen = 2;
-  menuGrid = new Grid(1, 4, width * 0.185, height * 0.35, width*0.15, stIcons, width*0.01);
+  menuGrid = new Grid(1, 4, width * 0.27 , height * 0.5, width*0.1, width*0.1, stIcons, width*0.01);
   grid2 = new Grid(5, 5, width*0.3, height * 0.2, width*.08, 
   Icons2);
   score = new ScoreManager("Daniel");
@@ -41,8 +44,10 @@ void setup() {
 }
 
 void draw() {
+  now = millis();
   switch(screen) {
   case 0:
+    image(FondoM, 0, 0, width, height);
     menuGrid.display();
     
     //image(stIcons[0], width *0.185, height * 0.35, width *0.15, width*0.15);
@@ -59,12 +64,12 @@ void draw() {
   case 2:
     background(120);
     grid2.display();
-    if(time.getSeconds() <= 50){
+    if(time.getSeconds() <= 30){
       score.display(50, 50, time.getSeconds());
-      grid2.change(300);  
+      grid2.change(300, now, 1);  
       grid2.mouseCollision(score);
       grid2.mouseHover();
-      grid2.stateHandle(1500);
+      grid2.stateHandle(1500, now, 1);
       time.setFinalTime(time.getSeconds());
     }
     score.display(50, 50, time.getFinalTime());

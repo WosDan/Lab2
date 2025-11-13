@@ -2,7 +2,8 @@ class Grid{
   private int lastChange = 0;
   private int rows;
   private int columns;
-  private float size;
+  private float fWidth;
+  private float fHeight;
   private float x;
   private float y;
   private float gap;
@@ -15,7 +16,8 @@ class Grid{
     this.frames = new Frame[rows][columns];
     this.x = x;
     this.y = y;
-    this.size = size;
+    this.fWidth = size;
+    this.fHeight = size;
     this.sprites = sprites;
     for(int i = 0; i < rows; i++){
       for(int j = 0; j < columns; j++){
@@ -24,18 +26,19 @@ class Grid{
     }
   }
   
-  Grid(int rows, int columns, float x, float y, float size, PImage[] sprites, float gap){
+  Grid(int rows, int columns, float x, float y, float fWidth, float fHeight, PImage[] sprites, float gap){
     this.rows = rows;
     this.columns = columns;
     this.frames = new Frame[rows][columns];
     this.x = x;
     this.y = y;
-    this.size = size;
+    this.fWidth = fWidth;
+    this.fHeight = fHeight;
     this.sprites = sprites;
     this.gap = gap;
     for(int i = 0; i < rows; i++){
       for(int j = 0; j < columns; j++){
-        frames[i][j] = new MenuFrame(x + j*size + j*gap, y + i*size + i*gap, size, j+i+1, sprites);
+        frames[i][j] = new MenuFrame(x + j*fWidth + j*gap, y + i*fHeight + i*gap, fWidth, fHeight, j+i+1, sprites);
       }
     }
   }
@@ -45,7 +48,7 @@ class Grid{
   }
   
   public float getSize() {
-    return this.size;
+    return this.fWidth;
   }
   
   public float getX() {
@@ -121,10 +124,10 @@ class Grid{
     return 0;
   }
   
-  public void change(int changeInterval){   
-    if(millis()-lastChange >= changeInterval){
+  public void change(int changeInterval, int now, float gameSpeed){   
+    if((now-lastChange)*gameSpeed >= changeInterval){
       randomState();
-      lastChange = millis();
+      lastChange = now;
     }
   }
   
@@ -144,10 +147,10 @@ class Grid{
     }
   }
   
-  public void stateHandle(int corruptionInterval){
+  public void stateHandle(int corruptionInterval, int now, float gameSpeed){
      for(int i = 0; i < rows; i++){
       for(int j = 0; j < columns; j++){
-        frames[i][j].corruption(corruptionInterval);
+        frames[i][j].corruption(corruptionInterval, now, gameSpeed);
       }
     } 
   }
