@@ -20,10 +20,10 @@ class Frame{
     return this.state;
   }
   
-  public void setState(int state){
+  public void setState(int state, int now){
     this.state = state;
     if(state == 1) {
-      lastChange = millis();
+      lastChange = now;
     }
   }
   

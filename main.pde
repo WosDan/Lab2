@@ -173,6 +173,10 @@ void draw() {
   now = millis();
   switch(screen) {
   case 0:
+  grid2.reset(time.getMillis());
+  score.resetPoints();
+  time.reset();
+  screen = 1;
     image(FondoM, 0, 0, width, height);
     menuGrid.display();
     
@@ -197,15 +201,17 @@ void draw() {
   case 2:
     background(120);
     grid2.display();
-    if(time.getSeconds() <= 30){
+    if(time.getSeconds() <= 30 && grid2.isRed() == false){
       score.display(50, 50, time.getSeconds());
-      grid2.change(300, now, 1);  
+      grid2.change(300, time.getMillis(), 1);  
       grid2.mouseCollision(score);
       grid2.mouseHover();
-      grid2.stateHandle(1500, now, 1);
+      grid2.stateHandle(1500, time.getMillis(), 1);
       time.setFinalTime(time.getSeconds());
+    }else{
+          screen = score.displayEnd2(width*0.2, height*0.6, time, grid2);
     }
-    score.display(50, 50, time.getFinalTime());
+    break;
   case 3:
   if(inputIsVisible == false){
      answer = new AnswerElement(booksX, 300, encodedMessage);

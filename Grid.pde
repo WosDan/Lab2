@@ -147,12 +147,12 @@ class Grid{
   
   public void change(int changeInterval, int now, float gameSpeed){   
     if((now-lastChange)*gameSpeed >= changeInterval){
-      randomState();
+      randomState(now);
       lastChange = now;
     }
   }
   
-  public void randomState(){
+  public void randomState(int now){
     if(this.isEmpty()){
       return;
     }
@@ -162,7 +162,7 @@ class Grid{
       int j = int(random(columns));
       
       if (frames[i][j].getState() == 0) {
-      frames[i][j].setState(1);
+      frames[i][j].setState(1, now);
       break;
       }
     }
@@ -174,6 +174,29 @@ class Grid{
         frames[i][j].corruption(corruptionInterval, now, gameSpeed);
       }
     } 
+  }
+  
+  public float redPercentage() {
+  int total = rows * columns;
+  int countRed = 0;
+
+  for (int i = 0; i < rows; i++) {
+    for (int j = 0; j < columns; j++) {
+      if (frames[i][j].getState() == 2) {
+        countRed++;
+      }
+    }
+  }
+  return (countRed * 100.0) / total;
+  }
+  
+  public void reset(int now) {
+    for (int i = 0; i < rows; i++) {
+      for (int j = 0; j < columns; j++) {
+        frames[i][j].setState(0, now);
+      }
+    }
+    lastChange = 0;
   }
   
 }
