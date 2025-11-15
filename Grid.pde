@@ -44,25 +44,26 @@ class Grid{
     }
   }
   
-  Grid(int rows, int columns, float x, float y, float fWidth, float fHeight, PImage[] sprites, float gap, PImage[] spritesHover){
-    this.rows = rows;
-    this.columns = columns;
-    this.frames = new Frame[rows][columns];
-    this.x = x;
-    this.y = y;
-    this.fWidth = fWidth;
-    this.fHeight = fHeight;
-    this.sprites = sprites;
-    this.gap = gap;
-    this.spritesHover = spritesHover;
-    int ct = 0;
-    for(int i = 0; i < rows; i++){
-      for(int j = 0; j < columns; j++){
-        frames[i][j] = new FrameG2(x + j*fWidth + j*gap, y + i*fHeight + i*gap, fWidth, fHeight, ct+1, sprites, spritesHover);
-        ct++;
-    }
-    }
-  }
+  //Grid(int rows, int columns, float x, float y, float fWidth, float fHeight, PImage[] sprites, float gap, PImage[] spritesHover, int id[], String names[]){
+  //  this.rows = rows;
+  //  this.columns = columns;
+  //  this.frames = new Frame[rows][columns];
+  //  this.x = x;
+  //  this.y = y;
+  //  this.fWidth = fWidth;
+  //  this.fHeight = fHeight;
+  //  this.sprites = sprites;
+  //  this.gap = gap;
+  //  this.spritesHover = spritesHover;
+  //  id = this.shuffle(id);
+  //  int ct = 0;
+  //  for(int i = 0; i < rows; i++){
+  //    for(int j = 0; j < columns; j++){
+  //      frames[i][j] = new FrameG2(x + j*fWidth + j*gap, y + i*fHeight + i*gap, fWidth, fHeight, ct, sprites, spritesHover, id[ct], names[id[ct]]);
+  //      ct++;
+  //  }
+  //  }
+  //}
   
   public PImage[] getSprites(){
     return this.sprites;
@@ -199,4 +200,13 @@ class Grid{
     lastChange = 0;
   }
   
+  public int[] shuffle(int[] array) {
+    for (int i = array.length - 1; i > 0; i--) {
+      int j = int(random(i+1));
+      int temp = array[i];
+      array[i] = array[j];
+      array[j] = temp;
+    }
+    return array;
+  }
 }
