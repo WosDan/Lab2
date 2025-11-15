@@ -121,7 +121,7 @@ void setup() {
   Icons2[0] = loadImage("./src/img/cuadrito_feliz.png");
   Icons2[1] = loadImage("./src/img/cuadrito_serio.png");
   Icons2[2] = loadImage("./src/img/cuadrito_enojado.png");
-  screen = 3;
+  screen = stScreen;
   //screen = 2;
   menuGrid = new Grid(1, 4, width * 0.27, height * 0.5, width*0.1, width*0.1, stIcons, width*0.01);
   //grid = new Grid(4, 3, width*0.15, height * 0.28, width * 0.22, height*0.11, Icons, width*0.01, IconsHover, ids, names);
