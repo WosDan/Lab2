@@ -68,6 +68,10 @@ PImage IconsHover[] = new PImage[12];
 PImage Icons2[] = new PImage[7];
 PImage FondoM;
 PImage Fondo;
+PImage Fondo2;
+PImage Fondo_Among;
+EjectionAnimation test;
+EjectionAnimation EjectionBackgrounds[] = new EjectionAnimation[5];
 
 void settings() {
   // size(1024, 576);
@@ -81,9 +85,11 @@ void setup() {
   cp5 = new ControlP5(this);
 
   BookCipherGame = new Juego3();
+  //EjectionBackgrounds[0] = new EjectionAnimation(loadImage("./src/img/ejection_skeld.png"));  
 
   FondoM = loadImage("./src/img/fondo_principal.png");
   Fondo = loadImage("./src/img/who_is_the_impostor.png");
+  Fondo2 = loadImage("./src/img/fondo2.png");
   stIcons[0] = loadImage("./src/img/logo1.png");
   stIcons[1] = loadImage("./src/img/cuadrito_feliz_boton.png");
   stIcons[2] = loadImage("./src/img/book.png");
@@ -126,10 +132,11 @@ void setup() {
   menuGrid = new Grid(1, 4, width * 0.27, height * 0.5, width*0.1, width*0.1, stIcons, width*0.01);
   //grid = new Grid(4, 3, width*0.15, height * 0.28, width * 0.22, height*0.11, Icons, width*0.01, IconsHover, ids, names);
   grid = new ImpostorGrid(3, 12, width*0.22, height * 0.11, width * 0.145, height*0.28, Icons, IconsHover, names, texts, ids, impostors);
-  grid2 = new Grid(5, 5, width*0.3, height * 0.2, width*.08, Icons2);
+  grid2 = new Grid(5, 5, width*0.3, height * 0.14, width*.08, Icons2);
   score = new ScoreManager("Daniel");
   time = new Time();
   amongUsFont = createFont("ArialMTPro-Regular", 16);
+  //screen = 5;
 }
 
 void draw() {
@@ -161,7 +168,7 @@ void draw() {
     grid.finishGame();
     break;
   case 2:
-    background(120);
+    image(Fondo2, 0, 0, width, height);
     grid2.display();
     if (time.getSeconds() <= 30 && grid2.isRed() == false) {
       score.display(50, 50, time.getSeconds());
@@ -178,6 +185,9 @@ void draw() {
     BookCipherGame.draw();
     break;
   case 4:
+    break;
+  case 5:
+   EjectionBackgrounds[0].display();
     break;
   }
 }

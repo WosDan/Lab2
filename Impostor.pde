@@ -12,7 +12,9 @@ class Impostor{
   public boolean error = false;
   public boolean counted = false;
   public boolean activeD = true;
-  private ImpostorGrid grid;
+  private EjectionAnimation animation;
+  public boolean activeExp = false;
+  private ImpostorGrid grid; 
 
   Impostor(float x, float y, float fWidth, float fHeight,
            boolean impostor, PImage sprite, PImage spriteHover,
@@ -28,39 +30,55 @@ class Impostor{
     this.sprite = sprite;
     this.spriteHover = spriteHover;
     this.grid = grid;
+    this.animation = new EjectionAnimation(loadImage("./src/img/ejection_skeld.png"), this.sprite, name);
   }
   
   public void display(){
     image(expelled ? spriteHover : sprite, x, y, fWidth, fHeight);
     textFont(amongUsFont);
-    fill(0);
     textSize(28);
-    text(name, x + fWidth*0.33, y + fHeight*0.25 + 5);
+    float tx = x + fWidth*0.33;
+    float ty = y + fHeight*0.25 + 5;
+    
+    fill(0);
+    text(name, tx-1, ty-1);
+    text(name, tx+1, ty-1);
+    text(name, tx-1, ty+1);
+    text(name, tx+1, ty+1);
+
     fill(expelled ? 165 : 255);
-    text(name, x + fWidth*0.33, y + fHeight*0.25 + 5);
+    text(name, tx, ty);
+    noFill();    
   }
   
   public void mouseHover(){
-    if(expelled == false && mouseX > x && mouseX < x + fWidth &&
+    if(!grid.activeDialog && !grid.activeExp && !expelled && mouseX > x && mouseX < x + fWidth &&
        mouseY > y && mouseY < y + fHeight){
       image(spriteHover, x, y, fWidth, fHeight);
       textFont(amongUsFont);
-      fill(0);
       textSize(28);
-      text(name, x + fWidth*0.33, y + fHeight*0.25 + 5);
+      float tx = x + fWidth*0.33;
+      float ty = y + fHeight*0.25 + 5;
+      fill(0);
+      text(name, tx-1, ty-1);
+      text(name, tx+1, ty-1);
+      text(name, tx-1, ty+1);
+      text(name, tx+1, ty+1);
+      
       fill(165);
-      text(name, x + fWidth*0.33, y + fHeight*0.25 + 5);
+      text(name, tx, ty);
+      noFill();
     }
   }
   
   public void mouseButton(){
-    if(expelled == false && mouseX > this.x && mouseX < this.x + fWidth &&
+    if(!grid.activeDialog && !grid.activeExp && !expelled && mouseX > this.x && mouseX < this.x + fWidth &&
        mouseY > y && mouseY < this.y + this.fHeight && mousePressed){
-      grid.activeDialog = true;
-      activeD = true;
+      this.grid.activeDialog = true;
+      this.activeD = true;
       
       for(Impostor imp : grid.impostores){
-      if(imp != this) imp.activeD = false;
+        if(imp != this) imp.activeD = false;
       }
     }
   }
@@ -104,9 +122,9 @@ class Impostor{
       if(mousePressed &&
          mouseX > width/2 - 45 && mouseX < width/2 - 45 + 100 &&
          mouseY > height - 100 && mouseY < height - 70){
-         activeD = false;
-         grid.activeDialog = false;
-         grid.count();   
+         this.activeD = false;
+         this.grid.activeDialog = false;
+         grid.count();  
       }
       
       // Colisión Aprobar
@@ -128,19 +146,30 @@ class Impostor{
       if(mousePressed &&
          mouseX > width/2 + 20 && mouseX < width/2 + 20 + width*0.094 &&
          mouseY > height - 60 && mouseY < height - 20){
-         counted = true;
-         expelled = true;
-         activeD = false;
+         this.counted = true;
+         this.expelled = true;
+         this.activeD = false;
          grid.activeDialog = false;
          if(impostor == false){
            this.error = true;
          }else{
            this.error = false;
          }
-         grid.count();         
+         this.activeExp = true;
+         this.grid.activeExp = true;
+         this.grid.count();         
       }
-      
       popStyle();
+    }
+
+  }
+  public void displayAnimation(){
+    if(this.activeExp){
+      animation.display();
+      if(animation.getTime().getMillis() >= animation.getTime().getFinalTime()){
+       this.activeExp = false;
+       this.grid.activeExp = false;
+      }
     }
   }
 }

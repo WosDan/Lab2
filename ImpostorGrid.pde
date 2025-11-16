@@ -5,6 +5,7 @@ class ImpostorGrid {
   private int cols, total;
   private float cellW, cellH, x, y;
   private boolean activeDialog = false;
+  private boolean activeExp = false;
   private int checked;
   private int error;
   private PImage EndScreens[] = new PImage[2];
@@ -71,6 +72,10 @@ class ImpostorGrid {
         if(impostores[i].activeD){
           impostores[i].displayDialog();
         }
+      }
+      
+      if(activeExp){
+        impostores[i].displayAnimation();        
       }
     }
   }

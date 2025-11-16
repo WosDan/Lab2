@@ -1,4 +1,4 @@
-class ScoreManager{
+  class ScoreManager{
   private int currentPoints;
   private String currentUser;
   
@@ -37,7 +37,6 @@ class ScoreManager{
     noFill();
     fill(0);
     textSize(32);
-    textAlign(LEFT, TOP);
     text("Points: " + currentPoints, x, y + 20);
     text("Time: " + time, x, y + 60);
     noFill();
@@ -49,13 +48,15 @@ class ScoreManager{
     fill(10, 74, 28, 256);
     rect(x + width * 0.2, y + height * 0.24, width * 0.2, height * 0.1, 50);
     noFill();
+    fill(255);
+    rect(width * 0.15, height * 0.25, width * 0.7, height * 0.4, 55);
     fill(0);
     if(grid.redPercentage() <= 20.0){
-      textSize(128);
-      text("¡Protegiste la red!", width * 0.2, height * 0.04);
+      textSize(100);
+      text("¡Protegiste la red!", width * 0.13, height * 0.4);
     }else{
-      textSize(128);
-      text("¡Comprometiste la red!", width * 0.1, height * 0.04);
+      textSize(88);
+      text("¡Comprometiste la red!", width * 0.17, height * 0.4);
     }
     textSize(32);
     textAlign(LEFT, TOP);
