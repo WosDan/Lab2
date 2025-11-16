@@ -116,12 +116,12 @@ class Impostor{
          counted = true;
          activeD = false;
          grid.activeDialog = false;
-         grid.count();
          if(impostor == true){
            this.error = true;
          }else{
            this.error = false;
          }
+         grid.count();
       }
       
       // Colisión Expulsar

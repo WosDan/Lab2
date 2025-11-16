@@ -7,6 +7,7 @@ class ImpostorGrid {
   private boolean activeDialog = false;
   private int checked;
   private int error;
+  private PImage EndScreens[] = new PImage[2];
 
   ImpostorGrid(int cols, int total, float cellW, float cellH,
     float x, float y,
@@ -18,6 +19,9 @@ class ImpostorGrid {
     this.x = x;
     this.y = y;
     this.total = total;
+    
+    EndScreens[0] = loadImage("./src/img/win_screen.png");
+    EndScreens[1] = loadImage("./src/img/lose_screen.png");
     
     ids = shuffle(ids);
     int ct = 0;
@@ -51,6 +55,9 @@ class ImpostorGrid {
   public void display(){
     for(int i = 0; i < total; i++){
       impostores[i].display();
+      System.out.println("Checked" + checked);
+      System.out.println("Error" + error);
+      System.out.println("Total" + total);
     }
   }
   
@@ -89,15 +96,17 @@ class ImpostorGrid {
   
   public void finishGame(){
     if(checked == total){
-      rectMode(CENTER);
-      if((total-error)*100 >= 70){
+      if((total-error)*100/total >= 70){
           fill(37, 168, 13);
-          rect(width*0.5, height * 0.5, width*0.6, height * 0.4);
-      }else if((total-error)*100 < 70) {
-          fill(168, 13, 13);
-          rect(width*0.5, height * 0.5, width*0.6, height * 0.4);
+          //rect(width*0.5, height * 0.5, width*0.6, height * 0.4);
+          image(EndScreens[0], 0, 0, width, height);          
       }
-      rectMode(CORNER);
+      
+      if((total-error)*100/total < 70) {
+          fill(168, 13, 13);
+          //rect(width*0.5, height * 0.5, width*0.6, height * 0.4);
+          image(EndScreens[1], 0, 0, width, height);
+    }
     }
   }
 }

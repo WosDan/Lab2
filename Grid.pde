@@ -90,25 +90,25 @@ class Grid{
   }
   
   public boolean isEmpty() {
-  for (int i = 0; i < rows; i++) {
-    for (int j = 0; j < columns; j++) {
-      if (frames[i][j].getState() == 0) {
-        return false;
+    for (int i = 0; i < rows; i++) {
+      for (int j = 0; j < columns; j++) {
+        if (frames[i][j].getState() == 0) {
+          return false;
+        }
       }
     }
-  }
-  return true;
+    return true;
   }
   
   public boolean isRed() {
-  for (int i = 0; i < rows; i++) {
-    for (int j = 0; j < columns; j++) {
-      if (frames[i][j].getState() != 2) {
-        return false;
+    for (int i = 0; i < rows; i++) {
+      for (int j = 0; j < columns; j++) {
+        if (frames[i][j].getState() != 2) {
+          return false;
+        }
       }
     }
-  }
-  return true;
+    return true;
   }
   
   public void display(){
