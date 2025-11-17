@@ -19,7 +19,7 @@ class MenuFrame extends Frame{
   public int button(){
     if(mouseX > x && mouseX < x + fWidth &&
        mouseY > y && mouseY < y + fHeight &&
-       mousePressed){
+       mouseJustReleased){
        return this.game;
     }
     return 0;

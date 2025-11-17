@@ -54,7 +54,7 @@ class Frame{
   public void mouseCollision(ScoreManager score){
     if(mouseX > x && mouseX < x + fWidth &&
        mouseY > y && mouseY < y + fHeight &&
-       mousePressed && state == 1){
+       mouseJustReleased && state == 1){
        state = 0;
        score.addPoints(1);
     }

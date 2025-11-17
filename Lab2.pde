@@ -1,6 +1,11 @@
 import controlP5.*;
 import java.lang.Math;
 
+boolean wasPressed = false;
+boolean justReleased = false;
+boolean mouseWasPressed = false;
+boolean mouseJustReleased = false;
+
 ControlP5 cp5;
 Juego3 BookCipherGame;
 
@@ -66,6 +71,7 @@ PImage stIcons[] = new PImage[6];
 PImage Icons[] = new PImage[12];
 PImage IconsHover[] = new PImage[12];
 PImage Icons2[] = new PImage[7];
+PImage amongusitos[] = new PImage[12];
 PImage FondoM;
 PImage Fondo;
 PImage Fondo2;
@@ -79,11 +85,11 @@ void settings() {
   size(1280, 720);
   xSize = width;
   ySize = height;
+  smooth(8);
 }
 
 void setup() {
   cp5 = new ControlP5(this);
-
   BookCipherGame = new Juego3();
   //EjectionBackgrounds[0] = new EjectionAnimation(loadImage("./src/img/ejection_skeld.png"));  
 
@@ -94,6 +100,10 @@ void setup() {
   stIcons[1] = loadImage("./src/img/cuadrito_feliz_boton.png");
   stIcons[2] = loadImage("./src/img/book.png");
   stIcons[3] = loadImage("./src/img/resortera.png");
+  
+  for(int i = 0; i < amongusitos.length; i++){
+    amongusitos[i] = loadImage("./src/img/amongusito_" + (i+1) + ".png");
+  }
 
   Icons[0]  = loadImage("./src/img/among_us_blue.png");
   Icons[1]  = loadImage("./src/img/among_us_brown_grey.png");
@@ -131,7 +141,7 @@ void setup() {
   //screen = 2;
   menuGrid = new Grid(1, 4, width * 0.27, height * 0.5, width*0.1, width*0.1, stIcons, width*0.01);
   //grid = new Grid(4, 3, width*0.15, height * 0.28, width * 0.22, height*0.11, Icons, width*0.01, IconsHover, ids, names);
-  grid = new ImpostorGrid(3, 12, width*0.22, height * 0.11, width * 0.145, height*0.28, Icons, IconsHover, names, texts, ids, impostors);
+  grid = new ImpostorGrid(3, 12, width*0.22, height * 0.11, width * 0.145, height*0.28, Icons, IconsHover, amongusitos, names, texts, ids, impostors);
   grid2 = new Grid(5, 5, width*0.3, height * 0.14, width*.08, Icons2);
   score = new ScoreManager("Daniel");
   time = new Time();
@@ -140,7 +150,27 @@ void setup() {
 }
 
 void draw() {
-  now = millis();
+  justReleased = false;
+  mouseJustReleased = false;
+
+  if (keyPressed) {
+    wasPressed = true;
+  } else {
+    if (wasPressed) {
+      justReleased = true;
+      wasPressed = false;
+    }
+  }
+  
+  if (mousePressed) {
+    mouseWasPressed = true;
+  } else {
+    if (mouseWasPressed) {
+      mouseJustReleased = true;
+      mouseWasPressed = false;
+    }
+  }
+
   switch(screen) {
   case 0:
     grid2.reset(time.getMillis());

@@ -31,16 +31,15 @@ class EjectionAnimation{
     if(time.getMillis() <= time.getFinalTime()){
       pushMatrix();
       fill(160);
-      crewMateX = (time.getMillis()/1000.0)*width*0.2;
+      crewMateX = (time.getMillis()/1000.0)*width*0.3;
       translate(crewMateX, crewMateY);
       //rectMode(CENTER);
       imageMode(CENTER);
-      rotate(2*PI*(time.getMillis()/1000.0)*0.5);
+      rotate(2*PI*(time.getMillis()/1000.0)*0.8);
       //rect(0, 0, 80, 40);
-      image(this.crew, 0, 0, 80, 40);
+      image(this.crew, 0, 0, 40, 70);
       imageMode(CORNER);
       //rectMode(CORNER);
-      System.out.println(this.time.getMillis());
       noFill();
       popMatrix();
     }

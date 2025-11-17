@@ -71,7 +71,7 @@
     mouseX <= (x + width * 0.2 + width * 0.2) &&
     mouseY >= (y + height * 0.24) &&
     mouseY <= (y + height * 0.24 + height * 0.1) &&
-    mousePressed){
+    mouseJustReleased){
       return 0;
     }
     return 2;

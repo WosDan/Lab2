@@ -32,7 +32,7 @@ class FrameG2 extends Frame{
   public int button(){
     if(mouseX > x && mouseX < x + fWidth &&
        mouseY > y && mouseY < y + fHeight &&
-       mousePressed){
+       mouseJustReleased){
          displayFullScreen("xD");
        return this.impostor;
     }
