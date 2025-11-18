@@ -137,7 +137,7 @@ class ImpostorGrid {
   }
   
   public void finishGame(){
-    float spacing = 120; // espacio entre cada imagen
+    float spacing = width * 0.13; // espacio entre cada imagen
     int tripCount = 0;
     for (int i = 0; i < total; i++) {
       if (!impostores[i].impostor) tripCount++;
@@ -146,15 +146,15 @@ class ImpostorGrid {
     for (int i = 0; i < total; i++) {
       if (impostores[i].impostor) impCount++;
     }
-    float totalWidthImp = (impCount - 1) * spacing;
+    float totalWidthImp = (impCount) * spacing;
     float startXImp = width/2 - totalWidthImp/2;
     float yImp = height/2 + 150; // fila inferior
-    float totalWidthTrip = (tripCount - 1) * spacing;
+    float totalWidthTrip = (tripCount) * spacing;
     float startXTrip = width/2 - totalWidthTrip/2; // inicio centrado
     float yTrip = height/2 - 150; // fila superior
+    
     if(checked == total){
       if((total-error)*100/total >= 70){
-          fill(37, 168, 13);
           //rect(width*0.5, height * 0.5, width*0.6, height * 0.4);
           image(EndScreens[0], 0, 0, width, height);
           
@@ -164,7 +164,7 @@ class ImpostorGrid {
             Impostor imp = impostores[i];
             if (!imp.impostor) {
               float x = startXTrip + idxTrip * spacing;
-              image(imp.amongusito, x, yTrip, 80, 80);
+              image(imp.amongusito, x, height*0.5 -40, width*.042*3, width*.06*3);
               text(imp.name, x, yTrip + 60);
               idxTrip++;
             }
@@ -172,7 +172,6 @@ class ImpostorGrid {
       }
       
       if((total-error)*100/total < 70) {
-          fill(168, 13, 13);
           //rect(width*0.5, height * 0.5, width*0.6, height * 0.4);
           image(EndScreens[1], 0, 0, width, height);
           
@@ -182,7 +181,7 @@ class ImpostorGrid {
             Impostor imp = impostores[i];
             if (imp.impostor) {
               float x = startXImp + idxImp * spacing;
-              image(imp.amongusito, x, yImp, 80, 80);
+              image(imp.amongusito, x, height*0.5 -50, width*.042*3, width*.06*3);
               text(imp.name, x, yImp + 60);
               idxImp++;
             }
