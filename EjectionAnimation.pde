@@ -35,9 +35,9 @@ class EjectionAnimation{
       translate(crewMateX, crewMateY);
       //rectMode(CENTER);
       imageMode(CENTER);
-      rotate(2*PI*(time.getMillis()/1000.0)*0.8);
+      rotate(2*PI*(time.getMillis()/1000.0)*0.5);
       //rect(0, 0, 80, 40);
-      image(this.crew, 0, 0, 40, 70);
+      image(this.crew, 0, 0, 42*1.8, 60*1.8);
       imageMode(CORNER);
       //rectMode(CORNER);
       noFill();
