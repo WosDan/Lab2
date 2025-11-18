@@ -136,10 +136,13 @@ class ImpostorGrid {
     
     for(int i = 0; i < total; i++){
       impostores[i] = new Impostor(posX[i], posY[i], cellW, cellH, impostor[ids[i]],sprites[i], spritesHover[i], amongusitos[i], nombres[ids[i]], textos[ids[i]], this);
+      impostores[i].dialog = this.dialog;    
     } 
   }
   
   public void finishGame(){
+    pushStyle();
+    textSize(12);
     float spacing = width * 0.13; // espacio entre cada imagen
     int tripCount = 0;
     for (int i = 0; i < total; i++) {
@@ -149,12 +152,13 @@ class ImpostorGrid {
     for (int i = 0; i < total; i++) {
       if (impostores[i].impostor) impCount++;
     }
-    float totalWidthImp = (impCount) * spacing;
+    
+    float impScale = impCount > 6 ? 0.5 : 1;
+    float crewScale = tripCount > 6 ? 0.5 : 1;
+    float totalWidthImp = (impCount) * spacing * impScale;
     float startXImp = width/2 - totalWidthImp/2;
-    float yImp = height/2 + 150; // fila inferior
-    float totalWidthTrip = (tripCount) * spacing;
+    float totalWidthTrip = (tripCount) * spacing * crewScale;
     float startXTrip = width/2 - totalWidthTrip/2; // inicio centrado
-    float yTrip = height/2 - 150; // fila superior
     
     if(checked == total){
       if((total-error)*100/total >= 70){
@@ -166,9 +170,9 @@ class ImpostorGrid {
           for (int i = 0; i < total; i++) {
             Impostor imp = impostores[i];
             if (!imp.impostor) {
-              float x = startXTrip + idxTrip * spacing;
-              image(imp.amongusito, x, height*0.5 -40, width*.042*3, width*.06*3);
-              text(imp.name, x, yTrip + 60);
+              float x = startXTrip + idxTrip * spacing * crewScale;
+              image(imp.amongusito, x, height*0.5 - height*.18, width*.042*3 * crewScale, width*.06*3 * crewScale);
+              text(imp.name.substring(0, imp.name.length() >= 8 ? 7 : imp.name.length()-1), x, height * 0.55);
               idxTrip++;
             }
           }
@@ -183,19 +187,20 @@ class ImpostorGrid {
           for (int i = 0; i < total; i++) {
             Impostor imp = impostores[i];
             if (imp.impostor) {
-              float x = startXImp + idxImp * spacing;
-              image(imp.amongusito, x, height*0.5 -50, width*.042*3, width*.06*3);
-              text(imp.name, x, yImp + 60);
+              float x = startXImp + idxImp * spacing * impScale;
+              image(imp.amongusito, x, height*0.5 - height *.144, width*.042*3*impScale, width*.06*3*impScale);
+              text(imp.name.substring(0, imp.name.length() >= 8 ? 7 : imp.name.length()-1), x, height*0.55);
               idxImp++;
             }
           }
       }
       
-      if(keyPressed && (keyCode == 13 || keyCode == ENTER || keyCode == RETURN)){
+      if(enterJustReleased){
         screen = 0;
         this.reset();
         System.out.println("Xd");
       }
     }
+    popStyle();
   }
 }

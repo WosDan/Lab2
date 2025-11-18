@@ -49,20 +49,21 @@
     }else{
       image(EndScreens[1], 0, 0, width, height);
     }
-    textSize(32);
-    textAlign(LEFT, TOP);
-    text("Cerrar",width * 0.27, height * 0.27);
+    textSize(128);
+    fill(0);
+    textAlign(CENTER);
+    //rect(width *0.8705, height*0.035, width*0.11, width*0.04);
     //text("Player: " + currentUser, x + width0.25, y + height 0.05);
-    text("Points: " + currentPoints,width * 0.255, height * 0.09);
-    text("Time: " + Math.round(time.getFinalTime()), width * 0.255, height * 0.17);
+    text("Points: " + currentPoints,width*0.5, height * 0.5);
+    text("Time: " + Math.round(time.getFinalTime()), width * 0.5, height * 0.7);
     noFill();
+    textAlign(CORNER);
     popStyle();
-
     if(
-     mouseX >= (width * 0.2) &&
-    mouseX <= (width * 0.2 + width * 0.2) &&
-    mouseY >= (height * 0.24) &&
-    mouseY <= (height * 0.24 + height * 0.1) &&
+     mouseX >= (width *0.8705) &&
+    mouseX <= (width *0.8705 + width*0.11) &&
+    mouseY >= (height*0.035) &&
+    mouseY <= (height*0.035 + width*0.04) &&
     mouseJustReleased){
       return 0;
     }

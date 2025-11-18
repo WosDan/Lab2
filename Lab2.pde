@@ -5,6 +5,8 @@ boolean wasPressed = false;
 boolean justReleased = false;
 boolean mouseWasPressed = false;
 boolean mouseJustReleased = false;
+boolean enterWasPressed = false;
+boolean enterJustReleased = false; 
 
 ControlP5 cp5;
 Juego3 BookCipherGame;
@@ -36,7 +38,42 @@ int selected = 0;
 int among_us_screen = 0;
 
 PFont amongUsFont;
-int ids[] = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11};
+//int ids[] = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11};
+//String[] names = {
+//  "Uninorte",
+//  "Unisur",
+//  "Amazon",
+//  "Armazon",
+//  "Nequi",
+//  "Ñequi",
+//  "Github",
+//  "GidJuV",
+//  "OpenAI",
+//  "ChatGePeTe",
+//  "WindowsUpdate",
+//  "Actualizador.exe"
+//};
+//boolean impostors[] = {false, true, false, true, false, true, false, true, false, true, false, true};
+//String[] texts = {"Actualización importante de servicios académicos",
+//  "Notificación sobre tu matrícula pendiente",
+//  "Confirmación de compra realizada en tu cuenta",
+//  "Alerta: actividad sospechosa en tu pedido reciente",
+//  "Tu transferencia ha sido procesada correctamente",
+//  "Advertencia: movimiento no autorizado detectado",
+//  "Invitación a colaborar en un nuevo repositorio",
+//  "Error crítico: repositorio corrupto necesita verificación",
+//  "Nuevo anuncio sobre mejoras en nuestros modelos de IA",
+//  "Tu cuenta presenta actividad no reconocida, verifícala",
+//  "Disponibles nuevas actualizaciones de seguridad del sistema",
+//  "Se requiere instalación urgente para evitar fallos del equipo"
+//};
+
+int ids[] = {
+  0, 1, 2, 3, 4, 5, 6, 7, 8, 9,
+  10, 11, 12, 13, 14, 15, 16, 17, 18, 19,
+  20, 21, 22, 23, 24, 25, 26, 27, 28, 29
+};
+
 String[] names = {
   "Uninorte",
   "Unisur",
@@ -49,22 +86,68 @@ String[] names = {
   "OpenAI",
   "ChatGePeTe",
   "WindowsUpdate",
-  "Actualizador.exe"
+  "Actualizador.exe",
+  "BancoEstelar",
+  "PayFriend",
+  "MicrosofUpdate",
+  "SeguridadDigital",
+  "CorreoInstitucional",
+  "SoporteTecnicoGlobal",
+  "UniversidadVirtual",
+  "EstudioOnline",
+  "MegaStore",
+  "SuperCompras",
+  "FinanzasYA",
+  "DineroExpress",
+  "CodeHub",
+  "RepoFail",
+  "IAResearch",
+  "BotConversacional",
+  "SystemPatch",
+  "DriverFixer"
 };
-boolean impostors[] = {false, true, false, true, false, true, false, true, false, true, false, true};
-String[] texts = {"Actualización importante de servicios académicos",
-  "Notificación sobre tu matrícula pendiente",
-  "Confirmación de compra realizada en tu cuenta",
-  "Alerta: actividad sospechosa en tu pedido reciente",
-  "Tu transferencia ha sido procesada correctamente",
-  "Advertencia: movimiento no autorizado detectado",
-  "Invitación a colaborar en un nuevo repositorio",
-  "Error crítico: repositorio corrupto necesita verificación",
-  "Nuevo anuncio sobre mejoras en nuestros modelos de IA",
-  "Tu cuenta presenta actividad no reconocida, verifícala",
-  "Disponibles nuevas actualizaciones de seguridad del sistema",
-  "Se requiere instalación urgente para evitar fallos del equipo"
+
+boolean impostors[] = {
+  false, true, false, true, false, true,
+  false, true, false, true, false, true,
+  false, true, true, true, true, true,
+  false, true, true, true, false, true,
+  true, true, false, true, true, true
 };
+
+String[] texts = {
+  "Actualización importante de servicios académicos en Uninorte: ingresa al portal oficial para confirmar tu matrícula y evitar inconvenientes en el inicio de clases.",
+  "Notificación sobre tu matrícula pendiente en Unisur: si no completas el proceso hoy mismo, perderás tu cupo en las asignaturas seleccionadas.",
+  "Confirmación de compra realizada en Amazon: tu pedido ha sido registrado exitosamente y será enviado en las próximas 48 horas con seguimiento disponible.",
+  "Alerta: actividad sospechosa en tu pedido de Armazon. Ingresa al enlace proporcionado para verificar tu cuenta y evitar bloqueos.",
+  "Tu transferencia en Nequi ha sido procesada correctamente. El monto ya está disponible en la cuenta destino y puedes consultarlo en tu historial.",
+  "Advertencia: movimiento no autorizado detectado en Ñequi. Ingresa tus datos personales para desbloquear tu cuenta y recuperar acceso.",
+  "Invitación a colaborar en un nuevo repositorio de Github. Únete al proyecto compartido y revisa las instrucciones iniciales para contribuir.",
+  "Error crítico en tu repositorio de GidJuV: descarga la herramienta adjunta para reparar los archivos corruptos y recuperar tu trabajo.",
+  "Nuevo anuncio de OpenAI: descubre las últimas mejoras en nuestros modelos de inteligencia artificial y cómo aplicarlas en tus proyectos.",
+  "Tu cuenta de ChatGePeTe presenta actividad no reconocida. Ingresa al enlace de verificación para confirmar tu identidad y evitar bloqueos.",
+  "Disponibles nuevas actualizaciones de seguridad en WindowsUpdate. Instálalas de inmediato para mantener tu equipo protegido contra vulnerabilidades recientes.",
+  "Se requiere instalación urgente de Actualizador.exe para evitar fallos graves en tu sistema operativo. Haz clic aquí para iniciar el proceso.",
+  "Mensaje oficial de BancoEstelar: hemos detectado intentos de acceso desde dispositivos no registrados. Ingresa al enlace seguro para confirmar tu identidad.",
+  "Recordatorio de PayFriend: tu suscripción anual está próxima a vencer. Renueva ahora para seguir disfrutando de todos los beneficios sin interrupciones.",
+  "Aviso de MicrosofUpdate: se han liberado parches críticos que corrigen vulnerabilidades graves. La instalación es obligatoria para continuar usando el sistema.",
+  "Sistema de SeguridadDigital: tu contraseña expira en 3 días. Actualízala cuanto antes para mantener el acceso sin inconvenientes.",
+  "CorreoInstitucional: se ha publicado un nuevo reglamento académico que entrará en vigor el próximo semestre. Consulta el documento completo en la plataforma.",
+  "SoporteTecnicoGlobal: hemos identificado errores en tu configuración de red. Descarga la herramienta de diagnóstico para solucionarlos inmediatamente.",
+  "UniversidadVirtual: tu acceso a las clases en línea ha sido renovado. Ingresa al campus digital para revisar los nuevos contenidos disponibles.",
+  "EstudioOnline: tu examen programado está listo. Ingresa al sistema para confirmar tu asistencia y revisar las instrucciones detalladas.",
+  "MegaStore: tu compra ha sido confirmada y será enviada en un plazo máximo de 72 horas. Revisa tu correo para el número de seguimiento.",
+  "SuperCompras: detectamos actividad sospechosa en tu cuenta. Ingresa al enlace de verificación para confirmar tus datos personales.",
+  "FinanzasYA: tu inversión ha sido registrada exitosamente. Consulta el portal para revisar el estado de tus movimientos financieros.",
+  "DineroExpress: hemos bloqueado temporalmente tu cuenta por actividad no reconocida. Ingresa tus credenciales para recuperar acceso.",
+  "CodeHub: se ha creado un nuevo repositorio colaborativo. Únete al proyecto y revisa las guías iniciales para contribuir.",
+  "RepoFail: error crítico detectado en tu repositorio. Descarga la herramienta adjunta para reparar los archivos dañados.",
+  "IAResearch: nuevas publicaciones sobre avances en inteligencia artificial están disponibles. Ingresa al portal para leer los artículos completos.",
+  "BotConversacional: tu cuenta presenta actividad no reconocida. Ingresa al enlace de verificación para confirmar tu identidad.",
+  "SystemPatch: nuevas actualizaciones de seguridad están disponibles. Instálalas de inmediato para mantener tu equipo protegido.",
+  "DriverFixer: se requiere instalación urgente de controladores para evitar fallos graves en tu sistema. Haz clic aquí para iniciar el proceso."
+};
+
 
 Impostor imp1;
 
@@ -83,7 +166,7 @@ EjectionAnimation EjectionBackgrounds[] = new EjectionAnimation[5];
 
 void settings() {
   // size(1024, 576);
-  // size(1920, 1080);
+   //size(1920, 1080);
   size(1280, 720);
   xSize = width;
   ySize = height;
@@ -157,13 +240,16 @@ void setup() {
 void draw() {
   justReleased = false;
   mouseJustReleased = false;
+  enterJustReleased = false;
+  
 
-  if (keyPressed) {
+  if (keyPressed && (keyCode == ENTER || keyCode == 13 || keyCode == RETURN)) {
     wasPressed = true;
+    enterWasPressed = true;
   } else {
-    if (wasPressed) {
-      justReleased = true;
-      wasPressed = false;
+    if (enterWasPressed) {
+      enterJustReleased = true;
+      enterWasPressed = false;
     }
   }
 
@@ -204,8 +290,10 @@ void draw() {
         }
         break;
       case 1:
-        image(Fondo, 0, 0, width, height);
-        grid.display();
+        if(!grid.activeDialog){
+          image(Fondo, 0, 0, width, height);
+          grid.display();  
+        }
         grid.displayDialog();
         if (!grid.activeDialog) {
           grid.mouseHover();

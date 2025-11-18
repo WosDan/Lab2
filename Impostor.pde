@@ -100,42 +100,34 @@ class Impostor{
     if(grid.activeDialog && !dialogBtnPressed){
       pushStyle();
       image(this.dialog, 0, 0, width, height);
-      fill(0, 180);
-      rect(0, 0, width, height);
 
-      fill(255);
-      rect(width*0.3, height*0.2, width*0.4, height*0.6);
-      textFont(amongUsFont);
-      noFill();
-      textSize(24);
+      textSize(36);
       fill(0);
-      text(this.texto, width*0.33, height*0.22, width*0.4, height*0.6);
+      text(this.texto, width*0.15, height*0.2, width*0.7, height*0.6);
       fill(255);
       textAlign(CENTER, TOP);
-      text(this.name, width/2, height-140);
+      //text(this.name, width/2, height-140);
+      noFill();
 
 
       // Botón Cerrar
-      fill(166);
-      rect(width/2 - 45, height - 100, 100, 30);
-      fill(255);
-      text("Cerrar", width/2, height - 95);
+      //rect(width *0.915, height*0.0775, width*0.0575, width*0.0575);
       
       // Botón Aprobar (verde)
-      fill(0,200,0);
-      rect(width/2 - 150, height - 60, width*0.094, 40);
-      fill(255);
-      text("Aprobar", width/2 - 83, height - 50);
+      //fill(0,200,0);
+      //rect(width*0.1, height * 0.855, width*0.08, height * 0.115);
+      //fill(255);
 
       // Botón Expulsar (rojo)
-      fill(200,0,0);
-      rect(width/2 + 20, height - 60, width*0.094, 40);
-      fill(255);
-      text("Expulsar", width/2 + 85, height - 50);
+      //fill(200,0,0);
+      //rect(width*0.235, height * 0.855, width*0.08, height * 0.115);
+      
+      //fill(255);
+      //text("Expulsar", width/2 + 85, height - 50);
 
       if(mouseJustReleased &&
-         mouseX > width/2 - 45 && mouseX < width/2 - 45 + 100 &&
-         mouseY > height - 100 && mouseY < height - 70 && !dialogBtnPressed){
+         mouseX > width*0.915 && mouseX < width * (0.915+0.0575) &&
+         mouseY > height * 0.0775 && mouseY < height *0.0775 + width *0.0575 && !dialogBtnPressed){
          this.activeD = false;
          this.grid.activeDialog = false;
          for(Impostor imp : grid.impostores){
@@ -146,8 +138,8 @@ class Impostor{
       
       // Colisión Aprobar
       if(mouseJustReleased &&
-         mouseX > width/2 - 150 && mouseX < width/2 - 150 + width*0.094 &&
-         mouseY > height - 60 && mouseY < height - 20 && grid.activeDialog){
+         mouseX > width*0.1 && mouseX < width*0.18 &&
+         mouseY > height *0.855 && mouseY < height * 0.855 + height * 0.115 && grid.activeDialog){
          counted = true;
          activeD = false;
          grid.activeDialog = false;
@@ -160,9 +152,10 @@ class Impostor{
       }
       
       // Colisión Expulsar
+      //width*0.235, height * 0.855, width*0.08, height * 0.115
       if(mouseJustReleased &&
-         mouseX > width/2 + 20 && mouseX < width/2 + 20 + width*0.094 &&
-         mouseY > height - 60 && mouseY < height - 20 && grid.activeDialog){
+         mouseX > width*0.235 && mouseX < width*0.315 &&
+         mouseY > height*0.855 && mouseY < height * (0.855+0.115) && grid.activeDialog){
          this.counted = true;
          this.expelled = true;
          this.activeD = false;
@@ -177,6 +170,7 @@ class Impostor{
          this.grid.count();         
       }
       textAlign(CORNER);
+      noFill();
       popStyle();
     }
 

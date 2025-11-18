@@ -57,6 +57,7 @@ class EjectionAnimation{
       textAlign(CENTER, CENTER);
       textSize(32);
       text(message.substring(0, lettersShown), width/2, height*0.5);
+      textAlign(CORNER);
     }
      
   }
