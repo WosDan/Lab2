@@ -1,5 +1,5 @@
 class Leaderboard {
-  int[] scores = new int[20];
+  int[] scores = new int[5];
   int scoreIndex = 0;
 
   PImage entryImage;
