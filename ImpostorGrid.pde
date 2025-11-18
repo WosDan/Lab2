@@ -15,6 +15,7 @@ class ImpostorGrid {
   private PImage amongusitos[];
   private String nombres[];
   private String textos[];
+  private PImage dialog;
 
   ImpostorGrid(int cols, int total, float cellW, float cellH,
     float x, float y,
@@ -32,6 +33,7 @@ class ImpostorGrid {
     this.amongusitos = amongusitos;
     this.nombres = nombres;
     this.textos = textos;
+    this.dialog = loadImage("./src/img/dialog.png");
     
     EndScreens[0] = loadImage("./src/img/win_screen.png");
     EndScreens[1] = loadImage("./src/img/lose_screen.png");
@@ -53,6 +55,7 @@ class ImpostorGrid {
     
     for(int i = 0; i < total; i++){
       impostores[i] = new Impostor(posX[i], posY[i], cellW, cellH, impostor[ids[i]],sprites[i], spritesHover[i], amongusitos[i], nombres[ids[i]], textos[ids[i]], this);          
+      impostores[i].dialog = this.dialog;    
     }   
   }
 

@@ -33,6 +33,7 @@ int xSize;
 int ySize;
 int now;
 int selected = 0;
+int among_us_screen = 0;
 
 PFont amongUsFont;
 int ids[] = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11};
@@ -72,6 +73,7 @@ PImage Icons[] = new PImage[12];
 PImage IconsHover[] = new PImage[12];
 PImage Icons2[] = new PImage[7];
 PImage amongusitos[] = new PImage[12];
+PImage endScreens2[] = new PImage[2];
 PImage FondoM;
 PImage Fondo;
 PImage Fondo2;
@@ -92,10 +94,13 @@ void setup() {
   cp5 = new ControlP5(this);
   BookCipherGame = new Juego3();
   //EjectionBackgrounds[0] = new EjectionAnimation(loadImage("./src/img/ejection_skeld.png"));
+  endScreens2[0] = loadImage("./src/img/protegiste_la_red.png");
+  endScreens2[1] = loadImage("./src/img/comprometiste_la_red.png");
 
   FondoM = loadImage("./src/img/fondo_principal.png");
   Fondo = loadImage("./src/img/who_is_the_impostor.png");
   Fondo2 = loadImage("./src/img/fondo2.png");
+  Fondo_Among = loadImage("./src/img/among_us_start_screen.png");
   stIcons[0] = loadImage("./src/img/logo1.png");
   stIcons[1] = loadImage("./src/img/cuadrito_feliz_boton.png");
   stIcons[2] = loadImage("./src/img/book.png");
@@ -105,10 +110,10 @@ void setup() {
     amongusitos[i] = loadImage("./src/img/amongusito_" + (i+1) + ".png");
   }
 
-  Icons[0]  = loadImage("./src/img/among_us_blue.png");
-  Icons[1]  = loadImage("./src/img/among_us_brown_grey.png");
+  Icons[0]  = loadImage("./src/img/among_us_light_pink.png");
+  Icons[1]  = loadImage("./src/img/among_us_brown.png");
   Icons[2]  = loadImage("./src/img/among_us_brunnete.png");
-  Icons[3]  = loadImage("./src/img/among_us_dark_green.png");
+  Icons[3]  = loadImage("./src/img/among_us_yellow.png");
   Icons[4]  = loadImage("./src/img/among_us_green.png");
   Icons[5]  = loadImage("./src/img/among_us_grey.png");
   Icons[6]  = loadImage("./src/img/among_us_light_blue.png");
@@ -117,12 +122,12 @@ void setup() {
   Icons[9]  = loadImage("./src/img/among_us_pink.png");
   Icons[10] = loadImage("./src/img/among_us_purple.png");
   //Icons[12] = loadImage("./src/img/among_us_red.png");
-  Icons[11] = loadImage("./src/img/among_us_terracota.png");
+  Icons[11] = loadImage("./src/img/among_us_grey_yellow.png");
 
-  IconsHover[0]  = loadImage("./src/img/among_us_blue_hover.png");
-  IconsHover[1]  = loadImage("./src/img/among_us_brown_grey_hover.png");
+  IconsHover[0]  = loadImage("./src/img/among_us_light_pink_hover.png");
+  IconsHover[1]  = loadImage("./src/img/among_us_brown_hover.png");
   IconsHover[2]  = loadImage("./src/img/among_us_brunnete_hover.png");
-  IconsHover[3]  = loadImage("./src/img/among_us_dark_green_hover.png");
+  IconsHover[3]  = loadImage("./src/img/among_us_yellow_hover.png");
   IconsHover[4]  = loadImage("./src/img/among_us_green_hover.png");
   IconsHover[5]  = loadImage("./src/img/among_us_grey_hover.png");
   IconsHover[6]  = loadImage("./src/img/among_us_light_blue_hover.png");
@@ -131,7 +136,7 @@ void setup() {
   IconsHover[9]  = loadImage("./src/img/among_us_pink_hover.png");
   IconsHover[10] = loadImage("./src/img/among_us_purple_hover.png");
   //IconsHover[12] = loadImage("./src/img/among_us_red_hover.png");
-  IconsHover[11] = loadImage("./src/img/among_us_terracota_hover.png");
+  IconsHover[11] = loadImage("./src/img/among_us_grey_yellow_hover.png");
 
 
   Icons2[0] = loadImage("./src/img/cuadrito_feliz.png");
@@ -189,13 +194,26 @@ void draw() {
     screen = menuGrid.button();
     break;
   case 1:
-    image(Fondo, 0, 0, width, height);
-    grid.display();
-    grid.displayDialog();
-    if (!grid.activeDialog) {
-      grid.mouseHover();
+    switch(among_us_screen){
+      case 0:
+        image(Fondo_Among, 0, 0, width, height);
+        if(mouseX > width * 0.375 && mouseX < width * 0.375 + width * 0.264 &&
+           mouseY > height * 0.59 && mouseY < height * 0.59 + height * 0.2 &&
+           mouseJustReleased){
+          among_us_screen = 1;
+        }
+        break;
+      case 1:
+        image(Fondo, 0, 0, width, height);
+        grid.display();
+        grid.displayDialog();
+        if (!grid.activeDialog) {
+          grid.mouseHover();
+        }
+        grid.finishGame();
+        break;
     }
-    grid.finishGame();
+    
     break;
   case 2:
     image(Fondo2, 0, 0, width, height);
@@ -208,13 +226,14 @@ void draw() {
       grid2.stateHandle(1500, time.getMillis(), 1);
       time.setFinalTime(time.getSeconds());
     } else {
-      screen = score.displayEnd2(width*0.2, height*0.6, time, grid2);
+      screen = score.displayEnd2(endScreens2, time, grid2);
     }
     break;
   case 3:
     BookCipherGame.draw();
     break;
   case 4:
+    screen = 0;
     break;
   case 5:
     EjectionBackgrounds[0].display();

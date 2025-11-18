@@ -17,6 +17,7 @@ class Impostor{
   public boolean activeExp = false;
   private ImpostorGrid grid; 
   private boolean dialogBtnPressed;
+  public PImage dialog;
 
   Impostor(float x, float y, float fWidth, float fHeight,
            boolean impostor, PImage sprite, PImage spriteHover, PImage amongusito,
@@ -43,7 +44,7 @@ class Impostor{
     textAlign(CORNER);
     textSize(28);
     float tx = x + fWidth*0.33;
-    float ty = y + fHeight*0.25 + 5;
+    float ty = y + fHeight*0.25 + 13;
     
     String sbs = name.substring(0, name.length() >= 10 ? 9 : name.length());
     
@@ -68,7 +69,7 @@ class Impostor{
       textFont(amongUsFont);
       textSize(28);
       float tx = x + fWidth*0.33;
-      float ty = y + fHeight*0.25 + 5;
+      float ty = y + fHeight*0.25 + 13;
       fill(0);
       String sbs = name.substring(0, name.length() >= 10 ? 9 : name.length());
       text(sbs, tx-1, ty-1);
@@ -98,6 +99,7 @@ class Impostor{
   public void displayDialog(){
     if(grid.activeDialog && !dialogBtnPressed){
       pushStyle();
+      image(this.dialog, 0, 0, width, height);
       fill(0, 180);
       rect(0, 0, width, height);
 
