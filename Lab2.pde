@@ -91,7 +91,7 @@ void settings() {
 void setup() {
   cp5 = new ControlP5(this);
   BookCipherGame = new Juego3();
-  //EjectionBackgrounds[0] = new EjectionAnimation(loadImage("./src/img/ejection_skeld.png"));  
+  //EjectionBackgrounds[0] = new EjectionAnimation(loadImage("./src/img/ejection_skeld.png"));
 
   FondoM = loadImage("./src/img/fondo_principal.png");
   Fondo = loadImage("./src/img/who_is_the_impostor.png");
@@ -100,8 +100,8 @@ void setup() {
   stIcons[1] = loadImage("./src/img/cuadrito_feliz_boton.png");
   stIcons[2] = loadImage("./src/img/book.png");
   stIcons[3] = loadImage("./src/img/resortera.png");
-  
-  for(int i = 0; i < amongusitos.length; i++){
+
+  for (int i = 0; i < amongusitos.length; i++) {
     amongusitos[i] = loadImage("./src/img/amongusito_" + (i+1) + ".png");
   }
 
@@ -161,7 +161,7 @@ void draw() {
       wasPressed = false;
     }
   }
-  
+
   if (mousePressed) {
     mouseWasPressed = true;
   } else {
@@ -217,7 +217,7 @@ void draw() {
   case 4:
     break;
   case 5:
-   EjectionBackgrounds[0].display();
+    EjectionBackgrounds[0].display();
     break;
   }
 }
