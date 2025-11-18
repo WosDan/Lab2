@@ -1,60 +1,101 @@
+boolean JUEGO3_DEBUG = false;
+
 class Juego3 {
-  BookElement keyBook;
-  String message;
-  String encodedMessage;
-
   BookElement[] books;
-  BookElement activeBook;
+  BookElement keyBook;
   OpenBookElement openBook;
-  boolean bookOpened = false;
-  boolean inputIsVisible = false;
-  int StartTime = 0;
-  int time;
-
   NoteElement directions;
   NoteElement postit;
   AnswerElement answer;
-  ImageElement gameEnd;
+  FinishScreen gameEnd;
+
+  String message;
+  String encodedMessage;
+  Juego3Time time;
+
+  Leaderboard leaderboard;
 
   String[] mensajes = new String[] {
     "En la noche a las 8:35 en Viena",
     "La noche estrellada de Van Gogh",
     "La clave es las 8:35",
-    "Uno más dos es tres",
+    "Uno mas dos es tres",
     "Moby Dick era una ballena",
-    "Nunca pensé estar aquí",
-    "No es seguro ahí afuera",
+    "Nunca pense estar aqui",
+    "No es seguro ahi afuera",
     "El sol brilla en el cielo",
-    "La casa está cerca del río",
-    "El niño juega con la pelota",
+    "La casa esta cerca del rio",
+    "El nino juega con la pelota",
     "La mujer lee un libro en la mesa",
-    "El perro corre por el jardín",
+    "El perro corre por el jardin",
     "La noche es oscura y tranquila",
     "El hombre camina por la calle",
-    "La comida está en la cocina",
+    "La comida esta en la cocina",
     "El agua cae sobre la tierra",
     "La puerta se abre lentamente",
-    "El viento sopla entre los árboles",
+    "El viento sopla entre los arboles",
     "La luna ilumina el camino",
     "El gato duerme en la silla",
-    "La flor crece en el jardín",
-    "El tren pasa por la estación",
-    "La montaña está cubierta de nieve",
+    "La flor crece en el jardin",
+    "El tren pasa por la estacion",
+    "La montana esta cubierta de nieve",
     "El reloj marca la hora exacta",
     "La ventana deja entrar la luz",
     "El mar golpea contra las rocas",
-    "La campana suena en la iglesia"
+    "La campana suena en la iglesia",
+    "El hombre tiene un libro de guerra",
+    "El tiempo es importante para el estudio",
+    "La guerra afecta al estado y al pueblo",
+    "El agua del rio es clara",
+    "El padre del hombre tiene conocimiento",
+    "El lugar tiene luz para el estudio",
+    "El general tiene fuerza para la guerra",
+    "La ciudad del hombre tiene trabajo",
+    "El sistema del estado es importante",
+    "El estado tiene guerra con su pueblo",
+    "El estudio del libro tiene resultado",
+    "La teoria del autor es sobre la naturaleza",
+    "El viaje del hombre requiere tiempo",
+    "La mente del hombre es importante",
+    "El tren del hombre sale de la ciudad",
+    "La cena del hotel es para el hombre",
+    "El pueblo del estado tiene ayuda",
+    "El ejercito tiene fuerza para guerra",
+    "El libro del autor es sobre guerra",
+    "El agua del rio es para el hombre",
+    "El general del ejercito tiene orden",
+    "La luz del dia es para la casa",
+    "El conocimiento del hombre crece",
+    "La fuerza del agua es importante",
+    "El principio del estudio es claro",
+    "La noche es tiempo de estudio",
+    "El trabajo del hombre es importante",
+    "El mundo del hombre tiene sistema",
+    "El tiempo de guerra es importante",
+    "El libro sobre la naturaleza del hombre"
   };
 
   Juego3() {
     books = new BookElement[4];
     books[0] = new BookElement(30, 10, "Dracula Cap1", "Bistritz, 3 de mayo. Salí de Münich a las 8:35 de la noche del primero de mayo, llegué a Viena a la mañana siguiente, temprano; debí haber llegado a las seis cuarenta y seis; el tren llevaba una hora de retraso. Budapest parece un lugar maravilloso, a juzgar por lo poco que pude ver de ella desde el tren y por la pequeña caminata que di por sus calles. Temí alejarme mucho de la estación, ya que, como habíamos llegado tarde, saldríamos lo más cerca posible de la hora fijada. La impresión que tuve fue que estábamos saliendo del oeste y entrando al este. Por el más occidental de los espléndidos puentes sobre el Danubio, que aquí es de gran anchura y profundidad, llegamos a los lugares en otro tiempo sujetos al dominio de los turcos. Salimos con bastante buen tiempo, y era noche cerrada cuando llegamos a Klausenburg, donde pasé la noche en el hotel Royale. En la comida, o mejor dicho, en la cena, comí pollo preparado con pimentón rojo, que estaba muy sabroso, pero que me dio mucha sed. (Recordar obtener la receta para Mina). Le pregunté al camarero y me dijo que se llamaba \"paprika hendl\", y que, como era un plato nacional, me sería muy fácil obtenerlo en cualquier lugar de los Cárpatos. Descubrí que mis escasos conocimientos del alemán me servían allí de mucho; de hecho, no sé cómo me las habría arreglado sin ellos. Como dispuse de algún tiempo libre cuando estuve en Londres, visité el British Museum y estudié los libros y mapas de la biblioteca que se referían a Transilvania; se me había ocurrido que un previo conocimiento del país siempre sería de utilidad e importancia para tratar con un noble de la región. Descubrí que el distrito que él me había mencionado se encontraba en el extremo oriental del país, justamente en la frontera de tres estados: Transilvania, Moldavia y Bucovina, en el centro de los montes Cárpatos; una de las partes más salvajes y menos conocidas de Europa. No pude descubrir ningún mapa ni obra que arrojara luz sobre la exacta localización del castillo de Drácula, pues no hay mapas en este país que se puedan comparar en exactitud con los nuestros; pero descubrí que Bistritz, el pueblo de posta mencionado por el conde Drácula, era un lugar bastante conocido. Voy a incluir aquí algunas de mis notas, pues pueden refrescarme la memoria cuando le relate mis viajes a Mina. En la población de Transilvania hay cuatro nacionalidades distintas: sajones en el sur, y mezclados con ellos los valacos, que son descendientes de los dacios; magiares en el oeste, y escequelios en el este y el norte. Voy entre estos últimos, que aseguran ser descendientes de Atila y los hunos. Esto puede ser cierto, puesto que cuando los magiares conquistaron el país, en el siglo XI, encontraron a los hunos, que ya se habían establecido en él. Leo que todas las supersticiones conocidas en el mundo están reunidas en la herradura de los Cárpatos, como si fuese el centro de alguna especie de remolino imaginativo; si es así, mi estancia puede ser muy interesante. (Recordar que debo preguntarle al conde acerca de esas supersticiones). No dormí bien, aunque mi cama era suficientemente cómoda, pues tuve toda clase de extraños sueños. Durante toda la noche un perro aulló bajo mi ventana, lo cual puede haber tenido que ver algo con ello; o puede haber sido también el pimentón, puesto que tuve que beberme toda el agua de mi garrafón, y todavía me quedé sediento. Ya de madrugada me dormí, pero fui despertado por unos golpes insistentes en mi puerta, por lo que supongo que en esos momentos estaba durmiendo profundamente. Comí más pimentón en el desayuno, una especie de potaje hecho de harina de maíz que dicen era \"mamaliga\", y berenjena rellena con picadillo, un excelente plato al cual llaman \"impletata\" (recordar obtener también la receta de esto). Me apresuré a desayunarme, ya que el tren salía un poco después de las ocho, o, mejor dicho, debió haber salido, pues después de correr a la estación a las siete y media tuve que aguardar sentado en el vagón durante más de una hora antes de que nos pusiéramos en movimiento. Me parece que cuanto más al este se vaya, menos puntuales son los trenes. ¿Cómo serán en China? Pareció que durante todo el día vagábamos a través de un país que estaba lleno de toda clase de bellezas. A veces vimos pueblecitos o castillos en la cúspide de empinadas colinas, tales como se ven en los antiguos misales; algunas veces corrimos a la par de ríos y arroyuelos, que por el amplio y pedregoso margen a cada lado de ellos, parecían estar sujetos a grandes inundaciones. Se necesita gran cantidad de agua, con una corriente muy fuerte, para poder limpiar la orilla exterior de un río. En todas las estaciones había grupos de gente, algunas veces multitudes, y con toda clase de atuendos.");
-    books[1] = new BookElement(books[0].x + books[0].w + 10, 10, "Frankenstein Cap2", "Los acontecimientos que influyen decisivamente en nuestros destinos a menudo tienen su origen en sucesos triviales. La filosofía natural es el genio que ha ordenado mi destino. Así pues, en este resumen de mis primeros años, deseo explicar aquellos hechos que me condujeron a sentir una espe- cial predilección por la ciencia. Cuando tenía once años, fuimos todos de excursión a los baños que hay cerca de Thonon. Las inclemencias del tiem- po nos obligaron a quedarnos todo un día encerrados en la posada. En aque- lla casa, por casualidad, encontré un volumen con las obras de Cornelio Agrippa. Lo abrí sin mucho interés; la teoría que intentaba demostrar y los maravillosos hechos que relataba pronto cambiaron aquella apatía en entu- siasmo. Una nueva luz se derramó sobre mi entendimiento; y, dando saltos de alegría, comuniqué aquel descubrimiento a mi padre. No puedo dejar de señalar aquí cuántas veces los maestros tienen ocasión de dirigir los gustos de sus alumnos hacia conocimientos útiles y cuántas veces lo desaprove- chan inconscientemente. Mi padre observó sin mucho interés la cubierta del libro y dijo: —¡Ah… Cornelio Agrippa! Mi querido Víctor, no pierdas el tiempo en estas cosas; no son más que tonterías inútiles. Si en vez de esta advertencia, o incluso esa exclamación, mi padre se hu- biera tomado la molestia de explicarme que las teorías de Agrippa ya ha- bían quedado completamente refutadas y que se había instaurado un sistema científico moderno que tenía mucha más relevancia que el antiguo, porque el del antiguo era pretencioso y quimérico, mientras que las intenciones del moderno eran reales y prácticas… en esas circunstancias, con toda seguri- dad habría desechado el Agrippa y, teniendo la imaginación ya tan excitada, probablemente me habría aplicado a una teoría más racional de la química que ha dado como resultado los descubrimientos modernos. Es posible in- cluso que mis ideas nunca hubieran recibido el impulso fatal que me condu- jo a la ruina. Pero aquella mirada displicente que mi padre había lanzado al libro en ningún caso me aseguraba que supiera siquiera de qué trataba, así que continué leyendo aquel volumen con la mayor avidez. Cuando regresé a casa, mi primera ocupación fue procurarme todas las obras de ese autor y, después, las de Paracelso y las de Alberto Magno. Leí y estudié con deleite las locas fantasías de esos autores; me parecían tesoros que conocían muy pocos aparte de mí; y aunque a menudo deseé comunicar a mi padre aquellos conocimientos secretos, sin embargo, su firme desapro- bación de Agrippa, mi autor favorito, siempre me retuvo. De todos modos, le descubrí mi secreto a Elizabeth, bajo la estricta promesa de guardar se- creto, pero no pareció muy interesada en la materia, así que continué mis estudios solo. Puede resultar un poco extraño que en el siglo XVIII apareciera un discí- pulo de Alberto Magno; pero yo no pertenecía a una familia de científicos ni había asistido a ninguna clase en Ginebra. Así pues, la realidad no entur- biaba mis sueños y me entregué con toda la pasión a la búsqueda de la pie- dra filosofal y el elixir de la vida. Y esto último acaparaba toda mi atención; la riqueza era para mí un asunto menor, ¡pero qué fama alcanzaría mi des- cubrimiento si yo pudiera eliminar la enfermedad de la condición humana y conseguir que el hombre fuera invulnerable a cualquier cosa excepto a una muerte violenta! Esas no eran mis únicas ensoñaciones; invocar la aparición de fantasmas y demonios era una sugerencia constante de mis escritores favoritos, y yo ansiaba poder hacerlo inmediatamente; y si mis encantamientos nunca re- sultaban exitosos, yo atribuía los fracasos más a mi inexperiencia y a mis errores que a la falta de inteligencia o a la incompetencia de mis maestros. Los fenómenos naturales que tienen lugar todos los días delante de nues- tros ojos no me pasaban desapercibidos. La destilación, de la cual mis auto- res favoritos eran absolutamente ignorantes, me causaba asombro, pero con lo que me quedé maravillado fue con algunos experimentos con una bomba de aire que llevaba a cabo un caballero al que solíamos visitar. La ignorancia de mis filósofos en estas y muchas otras disciplinas sirvie- ron para desacreditarlos a mis ojos… pero no podía apartarlos a un lado de- finitivamente antes de que algún otro sistema ocupara su lugar en mi mente. Cuando tenía alrededor de catorce años, estábamos en nuestra casa cerca de Belrive y fuimos testigos de una violenta y terrible tormenta. Había baja- do desde el Jura y los truenos estallaban unos tras otros con un aterrador es- truendo en los cuatro puntos cardinales del cielo. Mientras duró la tormenta, yo permanecí observando su desarrollo con curiosidad y asombro. Cuando estaba allí, en la puerta, de repente, observé un rayo de fuego que se levan- taba desde un viejo y precioso roble que se encontraba a unas veinte yardas de nuestra casa; y en cuanto aquella luz resplandeciente se desvaneció, pude ver que el roble había desaparecido, y no quedaba nada allí, salvo un tocón abrasado. A la mañana siguiente, cuando fuimos a verlo, nos encontramos el árbol increíblemente carbonizado; no se había rajado por el impacto, sino que había quedado reducido por completo a astillas de madera. Nunca vi una cosa tan destrozada.");
-    books[2] = new BookElement(books[1].x + books[1].w + 10, 10, "Moby Dick Cap1", "Llamadme Ismael. Hace unos años —no importa cuánto hace exactamente—, teniendo poco o ningún dinero en el bolsillo, y nada en particular que me interesara en tierra, pensé que me iría a navegar un poco por ahí, para ver la parte acuática del mundo. Es un modo que tengo de echar fuera la melancolía y arreglar la circulación. Cada vez que me sorprendo poniendo una boca triste; cada vez que en mi alma hay un noviembre húmedo y lloviznoso; cada vez que me encuentro parándome sin querer ante las tiendas de ataúdes; y, especialmente, cada vez que la hipocondría me domina de tal modo que hace falta un recio principio moral para impedirme salir a la calle con toda deliberación a derribar metódicamente el sombrero a los transeúntes, entonces, entiendo que es más que hora de hacerme a la mar tan pronto como pueda. Es mi sustitutivo de la pistola y la bala. Con floreo filosófico, Catón se arroja sobre su espada; yo, calladamente, me meto en el barco. No hay nada sorprendente en esto. Aunque no lo sepan, casi todos los hombres, en una o en otra ocasión, abrigan sentimientos muy parecidos a los míos respecto al océano. Ahí tenéis la ciudad insular de los Manhattos, ceñida en torno por los muelles como las islas indias por los arrecifes de coral: el comercio la rodea con su resaca. A derecha y a izquierda, las calles os llevan al agua. Su extremo inferior es la Batería, donde esa noble mole es bañada por olas y refrescada por brisas que pocas horas antes no habían llegado a avistar tierra. Mirad allí las turbas de contempladores del agua. Pasead en torno a la ciudad en las primeras horas de una soñadora tarde de día sabático. Id desde Corlears Hook a Coenties Slip, y desde allí, hacia el norte, por Whitehall. ¿Qué veis? Apostados como silenciosos centinelas alrededor de toda la ciudad, hay millares y millares de seres mortales absortos en ensueños oceánicos. Unos apoyados contra las empalizadas; otros sentados en las cabezas de los atracaderos; otros mirando por encima de las amuradas de barcos arribados de la China; algunos, en lo alto de los aparejos, como esforzándose por obtener una visión aún mejor hacia la mar. Pero ésos son todos ellos hombres de tierra; los días de entre semana, encerrados entre tablas y yeso, atados a los mostradores, clavados a los bancos, sujetos a los escritorios. Entonces ¿cómo es eso? ¿Dónde están los campos verdes? ¿Qué hacen éstos aquí? Pero ¡mirad! Ahí vienen más multitudes, andando derechas al agua, y al parecer dispuestas a zambullirse. ¡Qué extraño! Nada les satisface sino el límite más extremo de la tierra firme; no les basta vagabundear al umbroso socaire de aquellos tinglados. No. Deben acercarse al agua tanto como les sea posible sin caerse dentro. Y ahí se quedan: millas seguidas de ellos, leguas. De tierra adentro todos, llegan de avenidas y callejas, de calles y paseos; del norte, este, sur y oeste. Pero ahí se unen todos. Decidme, ¿les atrae hacia aquí el poder magnético de las agujas de las brújulas de todos estos barcos? Una vez más. Digamos que estáis en el campo; en alguna alta tierra con lagos. Tomad casi cualquier sendero que os plazca, y apuesto diez contra uno a que os lleva por un valle abajo, y os deja junto a un remanso de la corriente. Hay magia en ello. Que el más distraído de los hombres esté sumergido en sus más profundos ensueños: poned de pie a ese hombre, haced que mueva las piernas, e infaliblemente os llevará al agua, si hay agua en toda la región. En caso de que alguna vez tengáis sed en el gran desierto americano, probad este experimento, si vuestra caravana está provista por casualidad de un cultivador de la metafísica. Sí, como todos saben, la meditación y el agua están emparejadas para siempre. Pero aquí hay un artista. Desea pintaros el trozo de paisaje más soñador, más sombrío, más callado, más encantador de todo el valle del Saco. ¿Cuál es el principal elemento que emplea? Ahí están sus árboles cada cual con su tronco hueco, como si hubiera dentro un ermitaño y un crucifijo; ahí duerme su pradera, y allí duermen sus ganados; y de aquella casita se eleva un humo soñoliento. Hundiéndose en lejanos bosques, serpentean un revuelto sendero, hasta alcanzar estribaciones sobrepuestas de montañas que se bañan en el azul que las envuelve.");
-    books[3] = new BookElement(books[2].x + books[2].w + 10, 10, "El arte de la guerra Cap1", "Sun Tzu dice: la guerra es de vital importancia para el Estado; es el dominio de la vida o de la muerte, el camino hacia la supervivencia o la pérdida del Imperio: es forzoso manejarla bien. No reflexionar seriamente sobre todo lo que le concierne es dar prueba de una culpable indiferencia en lo que respecta a la conservación o pérdida de lo que nos es mas querido; y ello no debe ocurrir entre nosotros. Hay que valorarla en términos de cinco factores fundamentales, y hacer comparaciones entre diversas condiciones de los bandos rivales, con vistas a determinar el resultado de la guerra. El primero de estos factores es la doctrina; el segundo, el tiempo; el tercero, el terreno; el cuarto, el mando; y el quinto, la disciplina. La doctrina significa aquello que hace que el pueblo esté en armonía con su gobernante, de modo que le siga donde sea, sin temer por sus vidas ni a correr cualquier peligro. El tiempo significa el Ying y el Yang, la noche y el día, el frío y el calor, días despejados o lluviosos, y el cambio de las estaciones. El terreno implica las distancias, y hace referencia a dónde es fácil o difícil desplazarse, y si es campo abierto o lugares estrechos, y esto influencia las posibilidades de supervivencia. El mando ha de tener como cualidades: sabiduría, sinceridad, benevolencia, coraje y disciplina. Por último, la disciplina ha de ser comprendida como la organización del ejército, las graduaciones y rangos entre los oficiales, la regulación de las rutas de suministros, y la provisión de material militar al ejército. Estos cinco factores fundamentales han de ser conocidos por cada general. Aquel que los domina, vence; aquel que no, sale derrotado. Por lo tanto, al trazar los planes, han de compararse los siguiente siete factores, valorando cada uno con el mayor cuidado: ¿Qué dirigente es más sabio y capaz? ¿Qué comandante posee el mayor talento? ¿Qué ejército obtiene ventajas de la naturaleza y el terreno? ¿En qué ejército se observan mejor las regulaciones y las instrucciones? ¿Qué tropas son más fuertes? ¿Qué ejército tiene oficiales y tropas mejor entrenadas? ¿Qué ejército administra recompensas y castigos de forma más justa? Mediante el estudio de estos siete factores, seré capaz de adivinar cual de los dos bandos saldrá victorioso y cual será derrotado. El general que siga mi consejo, es seguro que vencerá. Ese general ha de ser mantenido al mando. Aquel que ignore mi consejo, ciertamente será derrotado. Ese debe ser destituido. Tras prestar atención a mi consejo y planes, el general debe crear una situación que contribuya a su cumplimiento. Por situación quiero decir que debe tomar en consideración la situación del campo, y actuar de acuerdo con lo que le es ventajoso. El arte de la guerra se basa en el engaño. Por lo tanto, cuando es capaz de atacar, ha de aparentar incapacidad; cuando las tropas se mueven, aparentar inactividad. Si está cerca del enemigo, ha de hacerle creer que está lejos; si está lejos, aparentar que se está cerca. Poner cebos para atraer al enemigo. Golpear al enemigo cuando está desordenado. Prepararse contra él cuando está seguro en todas partes. Evitarle durante un tiempo cuando es más fuerte. Si tu oponente tiene un temperamento colérico, intenta irritarle. Si es arrogante, trata de fomentar su egoísmo. Si las tropas enemigas se hallan bien preparadas tras una reorganización, intenta desordenarlas. Si están unidas, siembra la disensión entre sus filas. Ataca al enemigo cuando no está preparado, y aparece cuando no te espera. Estas son las claves de la victoria para el estratega. Ahora, si las estimaciones realizadas antes de la batalla indican victoria, es porque los cálculos cuidadosamente realizados muestran que tus condiciones son más favorables que las condiciones del enemigo; si indican derrota, es porque muestran que las condiciones favorables para la batalla son menores. Con una evaluación cuidadosa, uno puede vencer; sin ella, no puede. Muchas menos oportunidades de victoria tendrá aquel que no realiza cálculos en absoluto. Gracias a este método, se puede examinar la situación, y el resultado aparece claramente.");
+    books[1] = new BookElement(books[0].x + books[0].w + 10, 10, "Frankenstein Cap2", "Los acontecimientos que influyen decisivamente en nuestros destinos a menudo tienen su origen en sucesos triviales. La filosofia natural es el genio que ha ordenado mi destino. Asi pues, en este resumen de mis primeros anos, deseo explicar aquellos hechos que me condujeron a sentir una espe- cial predileccion por la ciencia. Cuando tenia once anos, fuimos todos de excursion a los banos que hay cerca de Thonon. Las inclemencias del tiem- po nos obligaron a quedarnos todo un dia encerrados en la posada. En aque- lla casa, por casualidad, encontre un volumen con las obras de Cornelio Agrippa. Lo abri sin mucho interes; la teoria que intentaba demostrar y los maravillosos hechos que relataba pronto cambiaron aquella apatia en entu- siasmo. Una nueva luz se derramo sobre mi entendimiento; y, dando saltos de alegria, comunique aquel descubrimiento a mi padre. No puedo dejar de senalar aqui cuantas veces los maestros tienen ocasion de dirigir los gustos de sus alumnos hacia conocimientos utiles y cuantas veces lo desaprove- chan inconscientemente. Mi padre observo sin mucho interes la cubierta del libro y dijo: —¡Ah… Cornelio Agrippa! Mi querido Victor, no pierdas el tiempo en estas cosas; no son mas que tonterias inutiles. Si en vez de esta advertencia, o incluso esa exclamacion, mi padre se hu- biera tomado la molestia de explicarme que las teorias de Agrippa ya ha- bian quedado completamente refutadas y que se habia instaurado un sistema cientifico moderno que tenia mucha mas relevancia que el antiguo, porque el del antiguo era pretencioso y quimerico, mientras que las intenciones del moderno eran reales y practicas… en esas circunstancias, con toda seguri- dad habria desechado el Agrippa y, teniendo la imaginacion ya tan excitada, probablemente me habria aplicado a una teoria mas racional de la quimica que ha dado como resultado los descubrimientos modernos. Es posible in- cluso que mis ideas nunca hubieran recibido el impulso fatal que me condu- jo a la ruina. Pero aquella mirada displicente que mi padre habia lanzado al libro en ningun caso me aseguraba que supiera siquiera de que trataba, asi que continue leyendo aquel volumen con la mayor avidez. Cuando regrese a casa, mi primera ocupacion fue procurarme todas las obras de ese autor y, despues, las de Paracelso y las de Alberto Magno. Lei y estudie con deleite las locas fantasias de esos autores; me parecian tesoros que conocian muy pocos aparte de mi; y aunque a menudo desee comunicar a mi padre aquellos conocimientos secretos, sin embargo, su firme desapro- bacion de Agrippa, mi autor favorito, siempre me retuvo. De todos modos, le descubri mi secreto a Elizabeth, bajo la estricta promesa de guardar se- creto, pero no parecio muy interesada en la materia, asi que continue mis estudios solo. Puede resultar un poco extrano que en el siglo XVIII apareciera un disci- pulo de Alberto Magno; pero yo no pertenecia a una familia de cientificos ni habia asistido a ninguna clase en Ginebra. Asi pues, la realidad no entur- biaba mis suenos y me entregue con toda la pasion a la busqueda de la pie- dra filosofal y el elixir de la vida. Y esto ultimo acaparaba toda mi atencion; la riqueza era para mi un asunto menor, ¡pero que fama alcanzaria mi des- cubrimiento si yo pudiera eliminar la enfermedad de la condicion humana y conseguir que el hombre fuera invulnerable a cualquier cosa excepto a una muerte violenta! Esas no eran mis unicas ensonaciones; invocar la aparicion de fantasmas y demonios era una sugerencia constante de mis escritores favoritos, y yo ansiaba poder hacerlo inmediatamente; y si mis encantamientos nunca re- sultaban exitosos, yo atribuia los fracasos mas a mi inexperiencia y a mis errores que a la falta de inteligencia o a la incompetencia de mis maestros. Los fenomenos naturales que tienen lugar todos los dias delante de nues- tros ojos no me pasaban desapercibidos. La destilacion, de la cual mis auto- res favoritos eran absolutamente ignorantes, me causaba asombro, pero con lo que me quede maravillado fue con algunos experimentos con una bomba de aire que llevaba a cabo un caballero al que soliamos visitar. La ignorancia de mis filosofos en estas y muchas otras disciplinas sirvie- ron para desacreditarlos a mis ojos… pero no podia apartarlos a un lado de- finitivamente antes de que algun otro sistema ocupara su lugar en mi mente. Cuando tenia alrededor de catorce anos, estabamos en nuestra casa cerca de Belrive y fuimos testigos de una violenta y terrible tormenta. Habia baja- do desde el Jura y los truenos estallaban unos tras otros con un aterrador es- truendo en los cuatro puntos cardinales del cielo. Mientras duro la tormenta, yo permaneci observando su desarrollo con curiosidad y asombro. Cuando estaba alli, en la puerta, de repente, observe un rayo de fuego que se levan- taba desde un viejo y precioso roble que se encontraba a unas veinte yardas de nuestra casa; y en cuanto aquella luz resplandeciente se desvanecio, pude ver que el roble habia desaparecido, y no quedaba nada alli, salvo un tocon abrasado. A la manana siguiente, cuando fuimos a verlo, nos encontramos el arbol increiblemente carbonizado; no se habia rajado por el impacto, sino que habia quedado reducido por completo a astillas de madera. Nunca vi una cosa tan destrozada.");
+    books[2] = new BookElement(books[1].x + books[1].w + 10, 10, "Moby Dick Cap1", "Llamadme Ismael. Hace unos anos —no importa cuanto hace exactamente—, teniendo poco o ningun dinero en el bolsillo, y nada en particular que me interesara en tierra, pense que me iria a navegar un poco por ahi, para ver la parte acuatica del mundo. Es un modo que tengo de echar fuera la melancolia y arreglar la circulacion. Cada vez que me sorprendo poniendo una boca triste; cada vez que en mi alma hay un noviembre humedo y lloviznoso; cada vez que me encuentro parandome sin querer ante las tiendas de ataudes; y, especialmente, cada vez que la hipocondria me domina de tal modo que hace falta un recio principio moral para impedirme salir a la calle con toda deliberacion a derribar metodicamente el sombrero a los transeuntes, entonces, entiendo que es mas que hora de hacerme a la mar tan pronto como pueda. Es mi sustitutivo de la pistola y la bala. Con floreo filosofico, Caton se arroja sobre su espada; yo, calladamente, me meto en el barco. No hay nada sorprendente en esto. Aunque no lo sepan, casi todos los hombres, en una o en otra ocasion, abrigan sentimientos muy parecidos a los mios respecto al oceano. Ahi teneis la ciudad insular de los Manhattos, cenida en torno por los muelles como las islas indias por los arrecifes de coral: el comercio la rodea con su resaca. A derecha y a izquierda, las calles os llevan al agua. Su extremo inferior es la Bateria, donde esa noble mole es banada por olas y refrescada por brisas que pocas horas antes no habian llegado a avistar tierra. Mirad alli las turbas de contempladores del agua. Pasead en torno a la ciudad en las primeras horas de una sonadora tarde de dia sabatico. Id desde Corlears Hook a Coenties Slip, y desde alli, hacia el norte, por Whitehall. ¿Que veis? Apostados como silenciosos centinelas alrededor de toda la ciudad, hay millares y millares de seres mortales absortos en ensuenos oceanicos. Unos apoyados contra las empalizadas; otros sentados en las cabezas de los atracaderos; otros mirando por encima de las amuradas de barcos arribados de la China; algunos, en lo alto de los aparejos, como esforzandose por obtener una vision aun mejor hacia la mar. Pero esos son todos ellos hombres de tierra; los dias de entre semana, encerrados entre tablas y yeso, atados a los mostradores, clavados a los bancos, sujetos a los escritorios. Entonces ¿como es eso? ¿Donde estan los campos verdes? ¿Que hacen estos aqui? Pero ¡mirad! Ahi vienen mas multitudes, andando derechas al agua, y al parecer dispuestas a zambullirse. ¡Que extrano! Nada les satisface sino el limite mas extremo de la tierra firme; no les basta vagabundear al umbroso socaire de aquellos tinglados. No. Deben acercarse al agua tanto como les sea posible sin caerse dentro. Y ahi se quedan: millas seguidas de ellos, leguas. De tierra adentro todos, llegan de avenidas y callejas, de calles y paseos; del norte, este, sur y oeste. Pero ahi se unen todos. Decidme, ¿les atrae hacia aqui el poder magnetico de las agujas de las brujulas de todos estos barcos? Una vez mas. Digamos que estais en el campo; en alguna alta tierra con lagos. Tomad casi cualquier sendero que os plazca, y apuesto diez contra uno a que os lleva por un valle abajo, y os deja junto a un remanso de la corriente. Hay magia en ello. Que el mas distraido de los hombres este sumergido en sus mas profundos ensuenos: poned de pie a ese hombre, haced que mueva las piernas, e infaliblemente os llevara al agua, si hay agua en toda la region. En caso de que alguna vez tengais sed en el gran desierto americano, probad este experimento, si vuestra caravana esta provista por casualidad de un cultivador de la metafisica. Si, como todos saben, la meditacion y el agua estan emparejadas para siempre. Pero aqui hay un artista. Desea pintaros el trozo de paisaje mas sonador, mas sombrio, mas callado, mas encantador de todo el valle del Saco. ¿Cual es el principal elemento que emplea? Ahi estan sus arboles cada cual con su tronco hueco, como si hubiera dentro un ermitano y un crucifijo; ahi duerme su pradera, y alli duermen sus ganados; y de aquella casita se eleva un humo sonoliento. Hundiendose en lejanos bosques, serpentean un revuelto sendero, hasta alcanzar estribaciones sobrepuestas de montanas que se banan en el azul que las envuelve.");
+    books[3] = new BookElement(books[2].x + books[2].w + 10, 10, "El arte de la guerra Cap1", "Sun Tzu dice: la guerra es de vital importancia para el Estado; es el dominio de la vida o de la muerte, el camino hacia la supervivencia o la perdida del Imperio: es forzoso manejarla bien. No reflexionar seriamente sobre todo lo que le concierne es dar prueba de una culpable indiferencia en lo que respecta a la conservacion o perdida de lo que nos es mas querido; y ello no debe ocurrir entre nosotros. Hay que valorarla en terminos de cinco factores fundamentales, y hacer comparaciones entre diversas condiciones de los bandos rivales, con vistas a determinar el resultado de la guerra. El primero de estos factores es la doctrina; el segundo, el tiempo; el tercero, el terreno; el cuarto, el mando; y el quinto, la disciplina. La doctrina significa aquello que hace que el pueblo este en armonia con su gobernante, de modo que le siga donde sea, sin temer por sus vidas ni a correr cualquier peligro. El tiempo significa el Ying y el Yang, la noche y el dia, el frio y el calor, dias despejados o lluviosos, y el cambio de las estaciones. El terreno implica las distancias, y hace referencia a donde es facil o dificil desplazarse, y si es campo abierto o lugares estrechos, y esto influencia las posibilidades de supervivencia. El mando ha de tener como cualidades: sabiduria, sinceridad, benevolencia, coraje y disciplina. Por ultimo, la disciplina ha de ser comprendida como la organizacion del ejercito, las graduaciones y rangos entre los oficiales, la regulacion de las rutas de suministros, y la provision de material militar al ejercito. Estos cinco factores fundamentales han de ser conocidos por cada general. Aquel que los domina, vence; aquel que no, sale derrotado. Por lo tanto, al trazar los planes, han de compararse los siguiente siete factores, valorando cada uno con el mayor cuidado: ¿Que dirigente es mas sabio y capaz? ¿Que comandante posee el mayor talento? ¿Que ejercito obtiene ventajas de la naturaleza y el terreno? ¿En que ejercito se observan mejor las regulaciones y las instrucciones? ¿Que tropas son mas fuertes? ¿Que ejercito tiene oficiales y tropas mejor entrenadas? ¿Que ejercito administra recompensas y castigos de forma mas justa? Mediante el estudio de estos siete factores, sere capaz de adivinar cual de los dos bandos saldra victorioso y cual sera derrotado. El general que siga mi consejo, es seguro que vencera. Ese general ha de ser mantenido al mando. Aquel que ignore mi consejo, ciertamente sera derrotado. Ese debe ser destituido. Tras prestar atencion a mi consejo y planes, el general debe crear una situacion que contribuya a su cumplimiento. Por situacion quiero decir que debe tomar en consideracion la situacion del campo, y actuar de acuerdo con lo que le es ventajoso. El arte de la guerra se basa en el engano. Por lo tanto, cuando es capaz de atacar, ha de aparentar incapacidad; cuando las tropas se mueven, aparentar inactividad. Si esta cerca del enemigo, ha de hacerle creer que esta lejos; si esta lejos, aparentar que se esta cerca. Poner cebos para atraer al enemigo. Golpear al enemigo cuando esta desordenado. Prepararse contra el cuando esta seguro en todas partes. Evitarle durante un tiempo cuando es mas fuerte. Si tu oponente tiene un temperamento colerico, intenta irritarle. Si es arrogante, trata de fomentar su egoismo. Si las tropas enemigas se hallan bien preparadas tras una reorganizacion, intenta desordenarlas. Si estan unidas, siembra la disension entre sus filas. Ataca al enemigo cuando no esta preparado, y aparece cuando no te espera. Estas son las claves de la victoria para el estratega. Ahora, si las estimaciones realizadas antes de la batalla indican victoria, es porque los calculos cuidadosamente realizados muestran que tus condiciones son mas favorables que las condiciones del enemigo; si indican derrota, es porque muestran que las condiciones favorables para la batalla son menores. Con una evaluacion cuidadosa, uno puede vencer; sin ella, no puede. Muchas menos oportunidades de victoria tendra aquel que no realiza calculos en absoluto. Gracias a este metodo, se puede examinar la situacion, y el resultado aparece claramente.");
 
-    keyBook = getRandomBook();
-    message = getRandomMessage();
+    leaderboard = new Leaderboard(5);
+
+    start();
+  }
+
+  void start() {
+    if (!JUEGO3_DEBUG) {
+      keyBook = getRandomBook();
+      message = getRandomMessage();
+    } else {
+      keyBook = books[0];
+      message = "hola como estas";
+    }
+
     encodedMessage = keyBook.cipher(message);
 
     int directionsX = books[books.length-1].w + books[books.length-1].x + 10;
@@ -64,16 +105,20 @@ class Juego3 {
 
     openBook = new OpenBookElement(30 + answer.w + 30, keyBook.h + keyBook.y - 20);
     gameEnd = new FinishScreen(message);
+
+    time=null;
   }
 
   void draw() {
     boolean overAnyClickable = false;
+    if (time == null) {
+      time = new Juego3Time();
+    }
 
     background(114, 80, 16);
 
-    if (inputIsVisible == false && !answer.isFinished) {
+    if (cp5.getController("input") == null && !answer.isFinished) {
       answer.createInputField();
-      inputIsVisible = true;
     }
 
     for (BookElement book : books) {
@@ -83,10 +128,9 @@ class Juego3 {
       }
     }
 
-    if (bookOpened) {
-      openBook.draw(activeBook);
-      if (openBook.prevPage.isMouseOver() && openBook.pageIndex > 0 ||
-        openBook.nextPage.isMouseOver() && openBook.pageIndex + 2 < openBook.book.pages.length) {
+    if (openBook.isActive) {
+      openBook.draw();
+      if (openBook.isOverNext() || openBook.isOverPrev()) {
         overAnyClickable = true;
       }
     }
@@ -101,16 +145,23 @@ class Juego3 {
     directions.draw();
 
     if (answer.isFinished) {
-      gameEnd.draw();
-      if (inputIsVisible == true) {
+      if (time.finishTime == 0) {
+        time.finishTime = millis();
+        gameEnd.time = time.getSeconds();
         cp5.getController("input").remove();
-        inputIsVisible = false;
-        if (StartTime == 0) {
-          StartTime = millis();
-        }
 
-        if (millis()-StartTime >= 3000) {
+        int score = 3000 / gameEnd.time;
+        leaderboard.agregarScore(score);
+      }
+
+      gameEnd.draw();
+
+      int rn = millis();
+      if (rn-time.finishTime >= 5000) {
+        leaderboard.draw();
+        if (rn-time.finishTime >= 10000) {
           screen = 0;
+          start();
         }
       }
     }
@@ -138,7 +189,7 @@ class Juego3 {
     boolean alreadyDecoded = false;
 
     for (int i = 0; i < answer.decodedIndex; i++) {
-      String c = keyBook.cipher(inpt) + " -> " + inpt;
+      String c = keyBook.cipher(word) + " -> " + word;
       if (answer.decodedWords[i] != null && answer.decodedWords[i].equals(c)) {
         alreadyDecoded = true;
         break;
@@ -146,26 +197,39 @@ class Juego3 {
     }
 
     if (inMessage && notInEncoded && !alreadyDecoded) {
-      println(keyBook.cipher(inpt) + " -> " + inpt);
-      answer.decodedWords[answer.decodedIndex] = keyBook.cipher(inpt) + " -> " + inpt;
+      println(keyBook.cipher(word) + " -> " + word);
+      answer.decodedWords[answer.decodedIndex] = keyBook.cipher(word) + " -> " + word;
       answer.decodedIndex++;
     }
   }
 
   void mouseClicked() {
     for (BookElement book : books) {
-      if (book.isMouseOver() && book != activeBook) {
-        bookOpened = true;
-        activeBook = book;
+      if (book.isMouseOver()) {
+        openBook.isActive = true;
+        openBook.currentBook = book;
         openBook.pageIndex = 0;
       }
     }
 
-    if (openBook.prevPage.isMouseOver() && openBook.pageIndex > 0) {
+    if (openBook.isOverPrev()) {
       openBook.prevPage.trigger(-1);
-    } else if (openBook.nextPage.isMouseOver() && openBook.pageIndex + 2 < openBook.book.pages.length) {
+    } else if (openBook.isOverNext()) {
       openBook.prevPage.trigger(1);
     }
+  }
+}
+
+class Juego3Time {
+  int startTime = 0;
+  int finishTime = 0;
+
+  Juego3Time() {
+    startTime = millis();
+  }
+
+  public int getSeconds() {
+    return (finishTime - startTime) / 1000;
   }
 }
 
@@ -185,8 +249,6 @@ class Element {
   }
 
   public boolean isMouseOver() {
-    // println(mouseX, this.xbounds1, this.xbounds2, mouseX >= this.xbounds1, mouseX <= this.xbounds2);
-    // println(mouseY, this.ybounds1, this.ybounds2, mouseY >= this.ybounds1, mouseY <= this.ybounds2);
     if (mouseX >= this.xbounds1 && mouseX <= this.xbounds2 && mouseY >= this.ybounds1 && mouseY <= this.ybounds2) {
       return true;
     }
@@ -290,8 +352,11 @@ class BookElement extends ImageElement {
   public void draw() {
     image(this.img, this.x, this.y, this.w, this.h);
 
-    // fill(255, 127);
-    // rect(this.textX, this.textY, this.textW, this.textH);
+
+    if (JUEGO3_DEBUG) {
+      fill(255, 127);
+      rect(this.textX, this.textY, this.textW, this.textH);
+    }
 
     fill(255);
     textSize(16);
@@ -316,8 +381,11 @@ class NoteElement extends ImageElement {
   public void draw() {
     image(this.img, this.x, this.y, this.w, this.h);
 
-    // fill(255, 127);
-    // rect(this.textX, this.textY, this.textW, this.textH);
+    if (JUEGO3_DEBUG) {
+      fill(255, 127);
+      rect(this.textX, this.textY, this.textW, this.textH);
+    }
+
     fill(0);
     textSize(16);
     text(this.message, this.textX, this.textY, this.textW, this.textH);
@@ -374,7 +442,7 @@ class AnswerElement extends NoteElement {
       .setPosition(this.fieldX, this.fieldY)
       .setSize(this.fieldW, this.fieldH)
       .setAutoClear(true)
-      .setFont(createFont("Arial", 16))
+      .setFont(createFont("Arial", 16, true))
       .setColor(color(0))
       .setColorBackground(color(196, 181, 121))
       .setColorForeground(color(155, 142, 97))
@@ -389,9 +457,12 @@ class AnswerElement extends NoteElement {
 
     image(img, this.x, this.y, this.w, this.h + (decodedWords.length * 15));
 
-    // fill(255, 127);
-    // rect(this.textX, this.textY, this.textW, this.textH);
-    // rect(this.textX, this.fieldY + this.fieldH, this.textW, this.textH * this.decodedIndex);
+    if (JUEGO3_DEBUG) {
+      fill(255, 127);
+      rect(this.textX, this.textY, this.textW, this.textH);
+      rect(this.textX, this.fieldY + this.fieldH, this.textW, this.textH * this.decodedIndex);
+    }
+
     fill(0);
     textSize(16);
     text(this.message, this.textX, this.textY, this.textW, this.textH);
@@ -401,13 +472,10 @@ class AnswerElement extends NoteElement {
 
 class OpenBookElement extends ImageElement {
   int pageIndex = 0;
-
-  boolean overAnyButton = false;
+  boolean isActive = false;
   OpenBookButton nextPage;
   OpenBookButton prevPage;
-
-  BookElement book;
-
+  BookElement currentBook;
   OpenBookElement(int x, int y) {
     super(x, y, 320*3, 160*3, "book_purple_wide.png");
 
@@ -415,27 +483,44 @@ class OpenBookElement extends ImageElement {
     prevPage = new OpenBookButton(this.x, this.y + 90, this);
   }
 
-  public void draw(BookElement book) {
-    this.book = book;
+  boolean isOverPrev() {
+    if (prevPage.isMouseOver() && pageIndex > 0) {
+      return true;
+    } else return false;
+  }
 
+  boolean isOverNext() {
+    if (nextPage.isMouseOver() && pageIndex + 2 < currentBook.pages.length) {
+      return true;
+    } else return false;
+  }
+
+  public void draw() {
     image(img, this.x, this.y, this.w, this.h);
     textSize(24);
-    // fill(255, 127);
-    // rect(this.x + 90, this.y + 60, 330, 270);
+
     fill(0);
-    text(book.pages[this.pageIndex], this.x + 90, this.y + 60, 330, 270);
-    if (this.pageIndex + 1 < book.pages.length) {
-      // fill(255, 127);
-      // rect(this.x + (this.w / 2) + 60, this.y + 60, 330, 270);
+    text(currentBook.pages[this.pageIndex], this.x + 90, this.y + 60, 330, 270);
+    text(this.pageIndex+1, this.x+90, this.y+this.h-120);
+
+    if (pageIndex + 1 < currentBook.pages.length) {
       fill(0);
-      text(book.pages[this.pageIndex + 1], this.x + (this.w / 2) + 60, this.y + 60, 330, 270);
+      text(currentBook.pages[pageIndex + 1], this.x + (this.w / 2) + 60, this.y + 60, 330, 270);
+      text(this.pageIndex+2, this.x + this.w -90, this.y+this.h-120);
     }
 
-    if (this.pageIndex > 0) {
+    if (JUEGO3_DEBUG) {
+      fill(255, 127);
+      rect(this.x + 90, this.y + 60, 330, 270);
+      fill(255, 127);
+      rect(this.x + (this.w / 2) + 60, this.y + 60, 330, 270);
+    }
+
+    if (pageIndex > 0) {
       prevPage.draw();
     }
 
-    if (this.pageIndex + 2 < book.pages.length) {
+    if (pageIndex + 2 < currentBook.pages.length) {
       nextPage.draw();
     }
   }
@@ -449,8 +534,10 @@ class OpenBookButton extends Element {
   }
 
   public void draw() {
-    // fill(255, 127);
-    // rect(this.x, this.y, this.w, this.h);
+    if (JUEGO3_DEBUG) {
+      fill(255, 127);
+      rect(this.x, this.y, this.w, this.h);
+    }
   }
 
   public void trigger(int mode) {
@@ -463,8 +550,9 @@ class OpenBookButton extends Element {
 }
 
 class FinishScreen extends NoteElement {
+  int time = 0;
   FinishScreen(String message) {
-    super(0, 0, "Decifraste el codigo!\nEl mensaje era: " + message, 2);
+    super(0, 0, message, 2);
     this.w *= 3;
     this.h*=3;
     this.x = (width-this.w) / 2;
@@ -481,15 +569,16 @@ class FinishScreen extends NoteElement {
     this.textH = this.ybounds2 - this.ybounds1 - 90;
   }
 
-  public void draw() {
-    // fill(255, 100);
-    // rect(0, 0, width, height);
+  void draw() {
     image(this.img, this.x, this.y, this.w, this.h);
 
-    // fill(255, 127);
-    // rect(this.textX, this.textY, this.textW, this.textH);
+    if (JUEGO3_DEBUG) {
+      fill(255, 127);
+      rect(this.textX, this.textY, this.textW, this.textH);
+    }
+
     fill(0);
     textSize(32);
-    text(this.message, this.textX, this.textY, this.textW, this.textH);
+    text("Decifraste el mensaje: " + this.message + "\nDecifrado en: " + this.time + " segundos, con un puntaje de: " + 3000 / this.time, this.textX, this.textY, this.textW, this.textH);
   }
 }
