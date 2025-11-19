@@ -9,7 +9,12 @@ boolean enterWasPressed = false;
 boolean enterJustReleased = false; 
 
 ControlP5 cp5;
+Textfield inputName;
 Juego3 BookCipherGame;
+
+void name(String inptName){
+  currentUser = inptName;
+}
 
 void input(String inpt) {
   BookCipherGame.input(inpt);
@@ -22,13 +27,15 @@ void mouseClicked() {
 int stScreen = 0;
 int PhishHunter = 1;
 int FirewallMatrix = 2;
+boolean resetInput = false;
 
 Frame frame;
 Grid menuGrid;
 ImpostorGrid grid;
 Grid grid2;
-ScoreManager score;
+ScoreManager score2;
 Time time;
+Ranking ranking;
 
 int screen;
 int xSize;
@@ -36,6 +43,7 @@ int ySize;
 int now;
 int selected = 0;
 int among_us_screen = 0;
+String currentUser;
 
 PFont amongUsFont;
 //int ids[] = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11};
@@ -160,6 +168,7 @@ PImage endScreens2[] = new PImage[2];
 PImage FondoM;
 PImage Fondo;
 PImage Fondo2;
+PImage FondoRanking;
 PImage Fondo_Among;
 EjectionAnimation test;
 EjectionAnimation EjectionBackgrounds[] = new EjectionAnimation[5];
@@ -176,6 +185,7 @@ void settings() {
 void setup() {
   cp5 = new ControlP5(this);
   BookCipherGame = new Juego3();
+  ranking = new Ranking("src/files/ranking.csv");
   //EjectionBackgrounds[0] = new EjectionAnimation(loadImage("./src/img/ejection_skeld.png"));
   endScreens2[0] = loadImage("./src/img/protegiste_la_red.png");
   endScreens2[1] = loadImage("./src/img/comprometiste_la_red.png");
@@ -183,6 +193,7 @@ void setup() {
   FondoM = loadImage("./src/img/fondo_principal.png");
   Fondo = loadImage("./src/img/who_is_the_impostor.png");
   Fondo2 = loadImage("./src/img/fondo2.png");
+  FondoRanking = loadImage("./src/img/ranking.png");
   Fondo_Among = loadImage("./src/img/among_us_start_screen.png");
   stIcons[0] = loadImage("./src/img/logo1.png");
   stIcons[1] = loadImage("./src/img/cuadrito_feliz_boton.png");
@@ -231,7 +242,7 @@ void setup() {
   //grid = new Grid(4, 3, width*0.15, height * 0.28, width * 0.22, height*0.11, Icons, width*0.01, IconsHover, ids, names);
   grid = new ImpostorGrid(3, 12, width*0.22, height * 0.11, width * 0.145, height*0.28, Icons, IconsHover, amongusitos, names, texts, ids, impostors);
   grid2 = new Grid(5, 5, width*0.3, height * 0.14, width*.08, Icons2);
-  score = new ScoreManager("Daniel");
+  score2 = new ScoreManager("");
   time = new Time();
   amongUsFont = createFont("ArialMTPro-Regular", 16);
   //screen = 5;
@@ -264,22 +275,49 @@ void draw() {
 
   switch(screen) {
   case 0:
+    if(!resetInput){
+      cp5.addTextfield("name")
+      .setPosition(width*0.27, height*0.3)
+      .setSize(Math.round(width*0.43), Math.round(height*0.1))
+      .setAutoClear(true)
+      .setFont(createFont("ArialMTPro-Regular", 32, true))
+      .setColor(color(35, 42, 37))
+      .setColorBackground(color(97, 111, 87))
+      .setColorForeground(color(97, 111, 87))
+      .setColorActive(color(97, 111, 87))
+      .setLabel("");
+      resetInput = true;
+    }
     grid2.reset(time.getMillis());
-    score.resetPoints();
+    score2.resetPoints();
     time.reset();
-    screen = 1;
     image(FondoM, 0, 0, width, height);
     menuGrid.display();
-
+    
+    fill(0, 0 ,0, 150);
+    rect(0, 0, width, height*0.02);
+    noFill();
+    
     //image(stIcons[0], width *0.185, height * 0.35, width *0.15, width*0.15);
     //image(stIcons[1], width *0.335 + width*0.01, height * 0.35, width *0.15, width*0.15);
     //image(stIcons[0], width *0.485 + width*0.02, height * 0.35, width *0.15, width*0.15);
     //image(stIcons[0], width *0.635 + width*0.03, height * 0.35, width *0.15, width*0.15);
+    
 
-    menuGrid.mouseHover();
-    screen = menuGrid.button();
+    if(currentUser != null){
+      menuGrid.mouseHover();
+      screen = menuGrid.button();
+    }
+    
+    if(mouseX > 0 && mouseX < width &&
+       mouseY > 0 && mouseY < height * 0.02 &&
+       mouseJustReleased){
+      System.out.println("xd");
+      screen = 5;
+    }
     break;
   case 1:
+    if (resetInput) {cp5.getController("name").remove(); resetInput = false;}
     switch(among_us_screen){
       case 0:
         image(Fondo_Among, 0, 0, width, height);
@@ -298,33 +336,50 @@ void draw() {
         if (!grid.activeDialog) {
           grid.mouseHover();
         }
-        grid.finishGame();
+        grid.finishGame(ranking);
         break;
     }
     
     break;
   case 2:
+    if (resetInput) {cp5.getController("name").remove(); resetInput = false;}
     image(Fondo2, 0, 0, width, height);
     grid2.display();
     if (time.getSeconds() <= 30 && grid2.isRed() == false) {
-      score.display(50, 50, time.getSeconds());
+      score2.display(50, 50, time.getSeconds());
       grid2.change(300, time.getMillis(), 1);
-      grid2.mouseCollision(score);
+      grid2.mouseCollision(score2);
       grid2.mouseHover();
       grid2.stateHandle(1500, time.getMillis(), 1);
       time.setFinalTime(time.getSeconds());
     } else {
-      screen = score.displayEnd2(endScreens2, time, grid2);
+      ranking.agregarOActualizar(currentUser, 0, score2.getPoints(), 0, 0);
+      screen = score2.displayEnd2(endScreens2, time, grid2);
     }
     break;
   case 3:
+    if (resetInput) {cp5.getController("name").remove(); resetInput = false;}
     BookCipherGame.draw();
     break;
   case 4:
+    if (resetInput) {cp5.getController("name").remove(); resetInput = false;}
     screen = 0;
     break;
   case 5:
-    EjectionBackgrounds[0].display();
+    if (resetInput) {cp5.getController("name").remove(); resetInput = false;}
+    ranking.actualizarRanking();
+    //EjectionBackgrounds[0].display();
+    image(FondoRanking, 0, 0, width, height);
+    fill(0, 0 ,0, 150);
+    rect(0, height*0.98, width, height);
+    noFill();
+    ranking.displayTops(width*0.08, height *0.25, width * 0.16, height*0.05, width * 0.055, height*0.01);
+    if(mouseX > 0 && mouseX < width &&
+       mouseY > height*0.98 && mouseY < height &&
+       mouseJustReleased){
+      System.out.println("xd");
+      screen = 0;
+    }
     break;
   }
 }

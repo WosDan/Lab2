@@ -140,7 +140,7 @@ class ImpostorGrid {
     } 
   }
   
-  public void finishGame(){
+  public void finishGame(Ranking ranking){
     pushStyle();
     textSize(12);
     float spacing = width * 0.13; // espacio entre cada imagen
@@ -195,10 +195,10 @@ class ImpostorGrid {
           }
       }
       
-      if(enterJustReleased){
+      if(mouseJustReleased){
+        ranking.agregarOActualizar(currentUser, (total-error)*100/total, 0, 0, 0);
         screen = 0;
         this.reset();
-        System.out.println("Xd");
       }
     }
     popStyle();

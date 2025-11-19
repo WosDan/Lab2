@@ -151,6 +151,7 @@ class Juego3 {
         cp5.getController("input").remove();
 
         int score = 3000 / gameEnd.time;
+        ranking.agregarOActualizar(currentUser, 0, 0, score, 0);
         leaderboard.agregarScore(score);
       }
 
