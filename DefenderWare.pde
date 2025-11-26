@@ -68,6 +68,7 @@ class DefenderWare {
   }
 
   void draw() {
+    popStyle();
     noCursor();
     textFont(typography);
     textSize(10);
@@ -112,6 +113,7 @@ class DefenderWare {
       startTime = 0;
       cursor();
     }
+    pushStyle();
   }
 
   void mouseClicked() {
