@@ -6,13 +6,14 @@ boolean justReleased = false;
 boolean mouseWasPressed = false;
 boolean mouseJustReleased = false;
 boolean enterWasPressed = false;
-boolean enterJustReleased = false; 
+boolean enterJustReleased = false;
 
 ControlP5 cp5;
 Textfield inputName;
 Juego3 BookCipherGame;
+DefenderWare dw;
 
-void name(String inptName){
+void name(String inptName) {
   currentUser = inptName;
 }
 
@@ -22,6 +23,19 @@ void input(String inpt) {
 
 void mouseClicked() {
   BookCipherGame.mouseClicked();
+  dw.mouseClicked();
+}
+
+void mousePressed() {
+  dw.mousePressed();
+}
+
+void mouseDragged() {
+  dw.mouseDragged();
+}
+
+void mouseReleased() {
+  dw.mouseReleased();
 }
 
 int stScreen = 0;
@@ -175,7 +189,7 @@ EjectionAnimation EjectionBackgrounds[] = new EjectionAnimation[5];
 
 void settings() {
   // size(1024, 576);
-   //size(1920, 1080);
+  //size(1920, 1080);
   size(1280, 720);
   xSize = width;
   ySize = height;
@@ -183,6 +197,7 @@ void settings() {
 }
 
 void setup() {
+  dw = new DefenderWare();
   cp5 = new ControlP5(this);
   BookCipherGame = new Juego3();
   ranking = new Ranking("src/files/ranking.csv");
@@ -252,7 +267,7 @@ void draw() {
   justReleased = false;
   mouseJustReleased = false;
   enterJustReleased = false;
-  
+
 
   if (keyPressed && (keyCode == ENTER || keyCode == 13 || keyCode == RETURN)) {
     wasPressed = true;
@@ -275,17 +290,17 @@ void draw() {
 
   switch(screen) {
   case 0:
-    if(!resetInput){
+    if (!resetInput) {
       cp5.addTextfield("name")
-      .setPosition(width*0.27, height*0.3)
-      .setSize(Math.round(width*0.43), Math.round(height*0.1))
-      .setAutoClear(true)
-      .setFont(createFont("ArialMTPro-Regular", 32, true))
-      .setColor(color(35, 42, 37))
-      .setColorBackground(color(97, 111, 87))
-      .setColorForeground(color(97, 111, 87))
-      .setColorActive(color(97, 111, 87))
-      .setLabel("");
+        .setPosition(width*0.27, height*0.3)
+        .setSize(Math.round(width*0.43), Math.round(height*0.1))
+        .setAutoClear(true)
+        .setFont(createFont("ArialMTPro-Regular", 32, true))
+        .setColor(color(35, 42, 37))
+        .setColorBackground(color(97, 111, 87))
+        .setColorForeground(color(97, 111, 87))
+        .setColorActive(color(97, 111, 87))
+        .setLabel("");
       resetInput = true;
     }
     grid2.reset(time.getMillis());
@@ -293,56 +308,62 @@ void draw() {
     time.reset();
     image(FondoM, 0, 0, width, height);
     menuGrid.display();
-    
-    fill(0, 0 ,0, 150);
+
+    fill(0, 0, 0, 150);
     rect(0, 0, width, height*0.02);
     noFill();
-    
+
     //image(stIcons[0], width *0.185, height * 0.35, width *0.15, width*0.15);
     //image(stIcons[1], width *0.335 + width*0.01, height * 0.35, width *0.15, width*0.15);
     //image(stIcons[0], width *0.485 + width*0.02, height * 0.35, width *0.15, width*0.15);
     //image(stIcons[0], width *0.635 + width*0.03, height * 0.35, width *0.15, width*0.15);
-    
 
-    if(currentUser != null){
+
+    if (currentUser != null) {
       menuGrid.mouseHover();
       screen = menuGrid.button();
     }
-    
-    if(mouseX > 0 && mouseX < width &&
-       mouseY > 0 && mouseY < height * 0.02 &&
-       mouseJustReleased){
+
+    if (mouseX > 0 && mouseX < width &&
+      mouseY > 0 && mouseY < height * 0.02 &&
+      mouseJustReleased) {
       System.out.println("xd");
       screen = 5;
     }
     break;
   case 1:
-    if (resetInput) {cp5.getController("name").remove(); resetInput = false;}
-    switch(among_us_screen){
-      case 0:
-        image(Fondo_Among, 0, 0, width, height);
-        if(mouseX > width * 0.375 && mouseX < width * 0.375 + width * 0.264 &&
-           mouseY > height * 0.59 && mouseY < height * 0.59 + height * 0.2 &&
-           mouseJustReleased){
-          among_us_screen = 1;
-        }
-        break;
-      case 1:
-        if(!grid.activeDialog){
-          image(Fondo, 0, 0, width, height);
-          grid.display();  
-        }
-        grid.displayDialog();
-        if (!grid.activeDialog) {
-          grid.mouseHover();
-        }
-        grid.finishGame(ranking);
-        break;
+    if (resetInput) {
+      cp5.getController("name").remove();
+      resetInput = false;
     }
-    
+    switch(among_us_screen) {
+    case 0:
+      image(Fondo_Among, 0, 0, width, height);
+      if (mouseX > width * 0.375 && mouseX < width * 0.375 + width * 0.264 &&
+        mouseY > height * 0.59 && mouseY < height * 0.59 + height * 0.2 &&
+        mouseJustReleased) {
+        among_us_screen = 1;
+      }
+      break;
+    case 1:
+      if (!grid.activeDialog) {
+        image(Fondo, 0, 0, width, height);
+        grid.display();
+      }
+      grid.displayDialog();
+      if (!grid.activeDialog) {
+        grid.mouseHover();
+      }
+      grid.finishGame(ranking);
+      break;
+    }
+
     break;
   case 2:
-    if (resetInput) {cp5.getController("name").remove(); resetInput = false;}
+    if (resetInput) {
+      cp5.getController("name").remove();
+      resetInput = false;
+    }
     image(Fondo2, 0, 0, width, height);
     grid2.display();
     if (time.getSeconds() <= 30 && grid2.isRed() == false) {
@@ -358,25 +379,35 @@ void draw() {
     }
     break;
   case 3:
-    if (resetInput) {cp5.getController("name").remove(); resetInput = false;}
+    if (resetInput) {
+      cp5.getController("name").remove();
+      resetInput = false;
+    }
     BookCipherGame.draw();
     break;
   case 4:
-    if (resetInput) {cp5.getController("name").remove(); resetInput = false;}
-    screen = 0;
+    if (resetInput) {
+      cp5.getController("name").remove();
+      resetInput = false;
+    }
+    dw.start();
+    dw.draw();
     break;
   case 5:
-    if (resetInput) {cp5.getController("name").remove(); resetInput = false;}
+    if (resetInput) {
+      cp5.getController("name").remove();
+      resetInput = false;
+    }
     ranking.actualizarRanking();
     //EjectionBackgrounds[0].display();
     image(FondoRanking, 0, 0, width, height);
-    fill(0, 0 ,0, 150);
+    fill(0, 0, 0, 150);
     rect(0, height*0.98, width, height);
     noFill();
     ranking.displayTops(width*0.08, height *0.25, width * 0.16, height*0.05, width * 0.055, height*0.01);
-    if(mouseX > 0 && mouseX < width &&
-       mouseY > height*0.98 && mouseY < height &&
-       mouseJustReleased){
+    if (mouseX > 0 && mouseX < width &&
+      mouseY > height*0.98 && mouseY < height &&
+      mouseJustReleased) {
       System.out.println("xd");
       screen = 0;
     }

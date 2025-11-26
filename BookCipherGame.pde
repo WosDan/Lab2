@@ -250,10 +250,10 @@ class Element {
   }
 }
 
-class ImageElement extends Element {
+class ImageElementJ3 extends Element {
   PImage img;
 
-  ImageElement(int x, int y, int w, int h, String imgpath) {
+  ImageElementJ3(int x, int y, int w, int h, String imgpath) {
     super(x, y, w, h);
     this.img = loadImage(imgpath);
   }
@@ -263,7 +263,7 @@ class ImageElement extends Element {
   }
 }
 
-class BookElement extends ImageElement {
+class BookElement extends ImageElementJ3 {
   String title;
   String[] pages;
   int textX, textY, textW, textH;
@@ -357,7 +357,7 @@ class BookElement extends ImageElement {
   }
 }
 
-class NoteElement extends ImageElement {
+class NoteElement extends ImageElementJ3 {
   String message;
   int textX, textY, textW, textH;
 
@@ -463,7 +463,7 @@ class AnswerElement extends NoteElement {
   }
 }
 
-class OpenBookElement extends ImageElement {
+class OpenBookElement extends ImageElementJ3 {
   int pageIndex = 0;
   boolean isActive = false;
   OpenBookButton nextPage;
