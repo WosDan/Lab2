@@ -68,12 +68,13 @@ class DefenderWare {
   }
 
   void draw() {
-    popStyle();
+    pushStyle();
     noCursor();
     textFont(typography);
     textSize(10);
     textAlign(LEFT, TOP);
-
+    pushStyle();
+    
     bg.draw();
 
     customCursor.update();
@@ -113,7 +114,7 @@ class DefenderWare {
       startTime = 0;
       cursor();
     }
-    pushStyle();
+    popStyle();
   }
 
   void mouseClicked() {

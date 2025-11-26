@@ -261,6 +261,7 @@ void draw() {
 
   switch(screen) {
   case 0:
+    textFont(amongUsFont);
     if (!resetInput) {
       cp5.addTextfield("name")
         .setPosition(width*0.27, height*0.3)
